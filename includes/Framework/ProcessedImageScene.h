@@ -12,6 +12,7 @@ public:
     ~ProcessedImageScene();
 
     void addImage(QImage* image,bool grey=false);
+    QImage* getImage()const;
 
 private:
 

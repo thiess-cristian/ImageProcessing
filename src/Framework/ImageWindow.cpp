@@ -1,6 +1,7 @@
 #include "ImageWindow.h"
 #include "ui_Imagewindow.h"
 #include "ProcessedImageScene.h"
+#include "InvertColors.h"
 
 #include <iostream>
 #include <memory>
@@ -18,9 +19,11 @@ ImageWindow::ImageWindow(QWidget *parent) :
 
 
     m_initialImage = new ProcessedImageScene();
+    m_modifiedImage = new ProcessedImageScene();
 
     connect(ui->actionGreyscale, &QAction::triggered, this, &ImageWindow::loadGreyscale);
     connect(ui->actionColor, &QAction::triggered, this, &ImageWindow::loadColor);
+    connect(ui->actionInvert_colors, &QAction::triggered, this, &ImageWindow::invertColors);
     
 }
 
@@ -47,6 +50,16 @@ void ImageWindow::loadColor()
     m_initialImage->addImage(image);
 
     ui->graphicsViewInitial->setScene(m_initialImage);
+}
+
+void ImageWindow::invertColors()
+{
+    QImage* image=InvertColors::modify(m_initialImage->getImage());
+
+    m_modifiedImage->clear();
+    m_modifiedImage->addImage(image);
+
+    ui->graphicsViewModified->setScene(m_modifiedImage);
 }
 
 QImage* ImageWindow::getImage()

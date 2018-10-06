@@ -18,6 +18,7 @@ public:
 public slots:
     void loadGreyscale();
     void loadColor();
+    void invertColors();
 
 private:
     QImage* getImage();

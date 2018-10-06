@@ -17,9 +17,6 @@ ProcessedImageScene::~ProcessedImageScene()
 
 void ProcessedImageScene::addImage(QImage * image, bool grey)
 {
-    if (m_image != nullptr) {
-        delete m_image;
-    }
     if (grey) {
 
         int width = image->width();
@@ -42,4 +39,9 @@ void ProcessedImageScene::addImage(QImage * image, bool grey)
     QGraphicsPixmapItem* item = new QGraphicsPixmapItem(QPixmap::fromImage(*m_image));
     
     addItem(item);
+}
+
+QImage * ProcessedImageScene::getImage() const
+{
+    return m_image;
 }

@@ -19,6 +19,9 @@ public slots:
     void loadGreyscale();
     void loadColor();
     void invertColors();
+    void mirrorImage();
+    void binaryImage();
+    void histogram();
 
 private:
     QImage* getImage();

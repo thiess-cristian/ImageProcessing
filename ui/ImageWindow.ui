@@ -95,6 +95,9 @@
      <string>Tools</string>
     </property>
     <addaction name="actionInvert_colors"/>
+    <addaction name="actionMirror_image"/>
+    <addaction name="actionBinary_image"/>
+    <addaction name="actionHistogram"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuUtils"/>
@@ -114,6 +117,21 @@
   <action name="actionInvert_colors">
    <property name="text">
     <string>Invert colors</string>
+   </property>
+  </action>
+  <action name="actionMirror_image">
+   <property name="text">
+    <string>Mirror image</string>
+   </property>
+  </action>
+  <action name="actionBinary_image">
+   <property name="text">
+    <string>Binary image</string>
+   </property>
+  </action>
+  <action name="actionHistogram">
+   <property name="text">
+    <string>Histogram</string>
    </property>
   </action>
  </widget>

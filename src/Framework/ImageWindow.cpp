@@ -4,6 +4,7 @@
 
 #include "InvertColors.h"
 #include "BinaryImage.h"
+#include "MirrorImage.h"
 
 #include <iostream>
 #include <memory>
@@ -27,6 +28,7 @@ ImageWindow::ImageWindow(QWidget *parent) :
     connect(ui->actionColor,         &QAction::triggered, this, &ImageWindow::loadColor);
     connect(ui->actionInvert_colors, &QAction::triggered, this, &ImageWindow::invertColors);
     connect(ui->actionBinary_image,  &QAction::triggered, this, &ImageWindow::binaryImage);
+    connect(ui->actionMirror_image,  &QAction::triggered, this, &ImageWindow::mirrorImage);
     
 }
 
@@ -37,7 +39,7 @@ ImageWindow::~ImageWindow()
 
 void ImageWindow::loadGreyscale()
 {
-    QImage* image=getImage();
+    QImage* image=loadImage();
     m_initialImage->clear();
     m_initialImage->addImage(image,true);
 
@@ -47,7 +49,7 @@ void ImageWindow::loadGreyscale()
 
 void ImageWindow::loadColor()
 {
-    QImage* image = getImage();
+    QImage* image = loadImage();
 
     m_initialImage->clear();
     m_initialImage->addImage(image);
@@ -58,32 +60,36 @@ void ImageWindow::loadColor()
 void ImageWindow::invertColors()
 {
     QImage* image=InvertColors::modify(m_initialImage->getImage());
-    if (image != nullptr) {
-        m_modifiedImage->clear();
-        m_modifiedImage->addImage(image);
-
-        ui->graphicsViewModified->setScene(m_modifiedImage);
-    }
+    setModifiedImage(image);
 }
 
 void ImageWindow::mirrorImage()
-{}
+{
+    QImage* image = MirrorImage::modify(m_initialImage->getImage());
+    setModifiedImage(image);
+}
 
 void ImageWindow::binaryImage()
 {
     QImage* image = BinaryImage::modify(m_initialImage->getImage());
-    if (image != nullptr) {
-        m_modifiedImage->clear();
-        m_modifiedImage->addImage(image);
-
-        ui->graphicsViewModified->setScene(m_modifiedImage);
-    }
+    setModifiedImage(image);
+    
 }
 
 void ImageWindow::histogram()
 {}
 
-QImage* ImageWindow::getImage()
+void ImageWindow::setModifiedImage(QImage * image)
+{
+    if (image != nullptr) {
+        m_modifiedImage->clear();
+        m_modifiedImage->addImage(image);
+
+        ui->graphicsViewModified->setScene(m_modifiedImage);
+    }
+}
+
+QImage* ImageWindow::loadImage()
 {
     QString imagePath = QFileDialog::getOpenFileName(this, tr("Open file"), "", tr("IMAGE (*.jpg *.jpeg *.png *.bmp)"));
     if (imagePath.length()<5) {

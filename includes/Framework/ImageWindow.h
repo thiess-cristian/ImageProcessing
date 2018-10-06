@@ -24,7 +24,10 @@ public slots:
     void histogram();
 
 private:
-    QImage* getImage();
+
+    void setModifiedImage(QImage* image);
+
+    QImage* loadImage();
 
     ProcessedImageScene* m_initialImage;
     ProcessedImageScene* m_modifiedImage;

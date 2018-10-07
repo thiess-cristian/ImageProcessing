@@ -15,13 +15,14 @@ public:
     explicit ImageWindow(QWidget *parent = 0);
     ~ImageWindow();
 
-public slots:
+protected slots:
     void loadGreyscale();
     void loadColor();
     void invertColors();
     void mirrorImage();
     void binaryImage();
     void histogram();
+    void selectImage();
 
 private:
 

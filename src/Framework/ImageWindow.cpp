@@ -5,12 +5,14 @@
 #include "InvertColors.h"
 #include "BinaryImage.h"
 #include "MirrorImage.h"
+#include "Histogram.h"
 
 #include <iostream>
 #include <memory>
 
 #include <qfiledialog.h>
 #include <qgraphicsitem.h>
+#include <qevent.h>
 
 ImageWindow::ImageWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -23,12 +25,18 @@ ImageWindow::ImageWindow(QWidget *parent) :
 
     m_initialImage = new ProcessedImageScene();
     m_modifiedImage = new ProcessedImageScene();
+    ui->graphicsViewModified->setScene(m_modifiedImage);
+    ui->graphicsViewInitial->setScene(m_initialImage);
+
+    connect(m_initialImage, &ProcessedImageScene::selectedImage, m_modifiedImage, &ProcessedImageScene::getSelectedImage);
 
     connect(ui->actionGreyscale,     &QAction::triggered, this, &ImageWindow::loadGreyscale);
     connect(ui->actionColor,         &QAction::triggered, this, &ImageWindow::loadColor);
     connect(ui->actionInvert_colors, &QAction::triggered, this, &ImageWindow::invertColors);
     connect(ui->actionBinary_image,  &QAction::triggered, this, &ImageWindow::binaryImage);
     connect(ui->actionMirror_image,  &QAction::triggered, this, &ImageWindow::mirrorImage);
+    connect(ui->actionHistogram,     &QAction::triggered, this, &ImageWindow::histogram);
+    connect(ui->actionSelect_image,  &QAction::triggered, this, &ImageWindow::selectImage);
     
 }
 
@@ -37,14 +45,12 @@ ImageWindow::~ImageWindow()
     delete ui;
 }
 
+
 void ImageWindow::loadGreyscale()
 {
     QImage* image=loadImage();
     m_initialImage->clear();
     m_initialImage->addImage(image,true);
-
-    ui->graphicsViewInitial->setScene(m_initialImage);
-
 }
 
 void ImageWindow::loadColor()
@@ -53,8 +59,6 @@ void ImageWindow::loadColor()
 
     m_initialImage->clear();
     m_initialImage->addImage(image);
-
-    ui->graphicsViewInitial->setScene(m_initialImage);
 }
 
 void ImageWindow::invertColors()
@@ -77,15 +81,23 @@ void ImageWindow::binaryImage()
 }
 
 void ImageWindow::histogram()
-{}
+{
+    Histogram* g = new Histogram();
+    g->display(m_initialImage->getImage());
+
+}
+
+void ImageWindow::selectImage()
+{
+    m_initialImage->toggleSelection();
+
+}
 
 void ImageWindow::setModifiedImage(QImage * image)
 {
     if (image != nullptr) {
         m_modifiedImage->clear();
         m_modifiedImage->addImage(image);
-
-        ui->graphicsViewModified->setScene(m_modifiedImage);
     }
 }
 

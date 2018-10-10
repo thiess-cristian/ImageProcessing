@@ -56,8 +56,17 @@
     </item>
     <item row="1" column="0" colspan="4">
      <widget class="QSlider" name="horizontalSliderZoom">
+      <property name="maximum">
+       <number>198</number>
+      </property>
       <property name="orientation">
        <enum>Qt::Horizontal</enum>
+      </property>
+      <property name="tickPosition">
+       <enum>QSlider::TicksBelow</enum>
+      </property>
+      <property name="tickInterval">
+       <number>2</number>
       </property>
      </widget>
     </item>

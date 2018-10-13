@@ -13,12 +13,7 @@ Histogram::Histogram()
 {
     ui = std::make_unique<Ui_GraphWindow>();
     ui->setupUi(this);
-    setAttribute(Qt::WA_DeleteOnClose, true); // delete the object after the window is closed
-
-
-    ui->chartView->setHorizontalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    ui->chartView->setVerticalScrollBarPolicy(Qt::ScrollBarAlwaysOn);
-    
+    setAttribute(Qt::WA_DeleteOnClose, true); // delete the object after the window is closed   
 }
 
 Histogram::~Histogram()
@@ -28,7 +23,6 @@ Histogram::~Histogram()
 void Histogram::display(QImage * image)
 {
     show();
-
     std::map<size_t, size_t> colorCount;
 
     for (int i = 0; i < 256; i++) {
@@ -43,7 +37,6 @@ void Histogram::display(QImage * image)
     }
     QStringList categories;
 
-
     std::vector<QBarSet*> sets(colorCount.size());
     QBarSeries *series = new QBarSeries();
     series->setBarWidth(1);
@@ -53,18 +46,17 @@ void Histogram::display(QImage * image)
 
         *sets[i] << colorCount[i];
         sets[i]->setBrush(QColor(i, i, i));
-        sets[i]->setBorderColor(QColor(0, 0, 0));
+        sets[i]->setBorderColor(QColor(i, i, i));
        
         series->append(sets[i]);
     }
 
     QChart *chart = new QChart();
     chart->addSeries(series);
-    chart->setTitle("Simple barchart example");
+    chart->setTitle("Grayscale histogram");
     chart->setAnimationOptions(QChart::SeriesAnimations);
     chart->setBackgroundBrush(QBrush(QColor(192, 210, 210)));
     
-
     QBarCategoryAxis *axis = new QBarCategoryAxis();
     chart->createDefaultAxes();
     axis->append(categories);

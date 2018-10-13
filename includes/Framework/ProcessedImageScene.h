@@ -5,6 +5,7 @@
 
 class QImage;
 class QGraphicsSceneMouseEvent;
+class IMouseTool;
 
 class ProcessedImageScene :public QGraphicsScene
 {
@@ -32,9 +33,11 @@ protected:
 
 
 private:
-    bool m_selectionEnabled=false;
 
     QRect m_selection;
     QImage* m_image;
+
+    bool m_mouseToolEnabled=false;
+    std::unique_ptr<IMouseTool> m_mouseTool;
 
 };

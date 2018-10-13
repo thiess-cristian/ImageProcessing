@@ -1,4 +1,5 @@
 #include "ProcessedImageScene.h"
+#include "MouseSelectionTool.h"
 
 #include "qgraphicsitem.h"
 #include "qimage.h"
@@ -7,7 +8,6 @@
 
 ProcessedImageScene::ProcessedImageScene():m_image(nullptr)
 {
-
 }
 
 ProcessedImageScene::~ProcessedImageScene()
@@ -50,33 +50,32 @@ QImage * ProcessedImageScene::getImage() const
 
 void ProcessedImageScene::toggleSelection()
 {
-    m_selectionEnabled = !m_selectionEnabled;
+    m_mouseToolEnabled = !m_mouseToolEnabled;
+    if (m_mouseToolEnabled) {
+        m_mouseTool.release();
+        m_mouseTool.reset(new MouseSelectionTool(this));
+    } else {
+        m_mouseTool.release();
+    }
 }
 
 void ProcessedImageScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-   // std::cout << mouseEvent->scenePos().x()<<" "<< mouseEvent->scenePos().x()<<std::endl;
-
+    if (m_mouseTool != nullptr) {
+        m_mouseTool->processMouseMove(mouseEvent);
+    }
 }
 void ProcessedImageScene::mousePressEvent(QGraphicsSceneMouseEvent * mouseEvent)
 {
-    if (m_selectionEnabled) {
-
-        m_selection.setX(mouseEvent->scenePos().x());
-        m_selection.setY(mouseEvent->scenePos().y());
+    if (m_mouseTool != nullptr) {
+        m_mouseTool->processMousePress(mouseEvent);
     }
 }
 
 void ProcessedImageScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
-    if (m_selectionEnabled) {
-
-        m_selection.setWidth(mouseEvent->scenePos().x()-m_selection.x());
-        m_selection.setHeight(mouseEvent->scenePos().y()-m_selection.y());
-        
-        QImage* newImage = new QImage(m_image->copy(m_selection));
-
-        emit selectedImage(newImage);
+    if (m_mouseTool != nullptr) {
+        m_mouseTool->processMouseRelease(mouseEvent);
     }
 }
 

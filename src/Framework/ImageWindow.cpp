@@ -14,6 +14,7 @@
 #include <qfiledialog.h>
 #include <qgraphicsitem.h>
 #include <qevent.h>
+#include <qscrollbar.h>
 
 ImageWindow::ImageWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -28,6 +29,9 @@ ImageWindow::ImageWindow(QWidget *parent) :
     m_modifiedImage = new ProcessedImageScene();
     ui->graphicsViewModified->setScene(m_modifiedImage);
     ui->graphicsViewInitial->setScene(m_initialImage);
+
+    connect(ui->graphicsViewInitial->horizontalScrollBar(), &QScrollBar::valueChanged,ui->graphicsViewModified->horizontalScrollBar(), &QScrollBar::setValue);
+    connect(ui->graphicsViewInitial->verticalScrollBar(), &QScrollBar::valueChanged, ui->graphicsViewModified->verticalScrollBar(), &QScrollBar::setValue);
 
     connect(m_initialImage, &ProcessedImageScene::selectedImage, m_modifiedImage, &ProcessedImageScene::getSelectedImage);
 

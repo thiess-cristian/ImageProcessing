@@ -1,5 +1,4 @@
 #include "BinaryImage.h"
-#include "SmartDialog.h"
 
 #include <qimage.h>
 #include <qinputdialog.h>

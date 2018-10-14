@@ -15,14 +15,18 @@ HistogramEqualizer::~HistogramEqualizer()
 QImage * HistogramEqualizer::modify(QImage * image)
 {
     QImage* modifiedImage = nullptr;
-    if (image != nullptr) {
-        for (size_t i = 0; i < image->width(); i++) {
-            for (size_t j = 0; j < image->height(); j++) {
-                QColor color = image->pixelColor(i, j);
-                m_valueCount[color.value()]++;
-            }
+
+    if (image == nullptr) {
+        return nullptr;
+    }
+
+    for (size_t i = 0; i < image->width(); i++) {
+        for (size_t j = 0; j < image->height(); j++) {
+            QColor color = image->pixelColor(i, j);
+            m_valueCount[color.value()]++;
         }
     }
+    
 
     std::map<size_t, double> prob;
     size_t numOfPixels = image->width()*image->height();

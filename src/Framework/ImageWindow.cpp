@@ -5,7 +5,7 @@
 #include "InvertColors.h"
 #include "BinaryImage.h"
 #include "MirrorImage.h"
-#include "Histogram.h"
+#include "HistogramViewer.h"
 #include "HistogramEqualizer.h"
 
 #include <iostream>
@@ -31,7 +31,7 @@ ImageWindow::ImageWindow(QWidget *parent) :
     ui->graphicsViewInitial->setScene(m_initialImage);
 
     connect(ui->graphicsViewInitial->horizontalScrollBar(), &QScrollBar::valueChanged,ui->graphicsViewModified->horizontalScrollBar(), &QScrollBar::setValue);
-    connect(ui->graphicsViewInitial->verticalScrollBar(), &QScrollBar::valueChanged, ui->graphicsViewModified->verticalScrollBar(), &QScrollBar::setValue);
+    connect(ui->graphicsViewInitial->verticalScrollBar(),   &QScrollBar::valueChanged, ui->graphicsViewModified->verticalScrollBar(),  &QScrollBar::setValue);
 
     connect(m_initialImage, &ProcessedImageScene::selectedImage, m_modifiedImage, &ProcessedImageScene::getSelectedImage);
 
@@ -88,9 +88,10 @@ void ImageWindow::binaryImage()
 
 void ImageWindow::histogram()
 {
-    Histogram* g = new Histogram();
-    g->display(m_initialImage->getImage());
+    Histogram histogram(m_initialImage->getImage());
 
+    HistogramViewer* histogramViewer = new HistogramViewer(histogram);
+    histogramViewer->display();
 }
 
 void ImageWindow::selectImage()

@@ -23,6 +23,7 @@ protected slots:
     void binaryImage();
     void histogram();
     void selectImage();
+    void colorHistogramEqualization();
 
 private:
 

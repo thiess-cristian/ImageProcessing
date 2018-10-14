@@ -6,6 +6,7 @@
 #include "BinaryImage.h"
 #include "MirrorImage.h"
 #include "Histogram.h"
+#include "HistogramEqualizer.h"
 
 #include <iostream>
 #include <memory>
@@ -37,6 +38,7 @@ ImageWindow::ImageWindow(QWidget *parent) :
     connect(ui->actionMirror_image,  &QAction::triggered, this, &ImageWindow::mirrorImage);
     connect(ui->actionHistogram,     &QAction::triggered, this, &ImageWindow::histogram);
     connect(ui->actionSelect_image,  &QAction::triggered, this, &ImageWindow::selectImage);
+    connect(ui->actionColor_Histogram_Equalization, &QAction::triggered, this, &ImageWindow::colorHistogramEqualization);
     
 }
 
@@ -90,6 +92,14 @@ void ImageWindow::histogram()
 void ImageWindow::selectImage()
 {
     m_initialImage->toggleSelection();
+
+}
+
+void ImageWindow::colorHistogramEqualization()
+{
+    HistogramEqualizer equalizer;
+    QImage* image = equalizer.modify(m_initialImage->getImage());
+    setModifiedImage(image);
 
 }
 

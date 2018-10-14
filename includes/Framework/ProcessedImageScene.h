@@ -31,10 +31,7 @@ protected:
     void mousePressEvent(QGraphicsSceneMouseEvent* mouseEvent)override;
     void mouseReleaseEvent(QGraphicsSceneMouseEvent* mouseEvent)override;
 
-
 private:
-
-    QRect m_selection;
     QImage* m_image;
 
     bool m_mouseToolEnabled=false;

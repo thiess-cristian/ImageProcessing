@@ -108,6 +108,7 @@
     <addaction name="actionBinary_image"/>
     <addaction name="actionHistogram"/>
     <addaction name="actionSelect_image"/>
+    <addaction name="actionColor_Histogram_Equalization"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuUtils"/>
@@ -147,6 +148,11 @@
   <action name="actionSelect_image">
    <property name="text">
     <string>SelectImage</string>
+   </property>
+  </action>
+  <action name="actionColor_Histogram_Equalization">
+   <property name="text">
+    <string>Color Histogram Equalization</string>
    </property>
   </action>
  </widget>

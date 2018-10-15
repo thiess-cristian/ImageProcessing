@@ -2,6 +2,7 @@
 #include "ui_Imagewindow.h"
 #include "ProcessedImageScene.h"
 
+#include "Grayscale.h"
 #include "InvertColors.h"
 #include "BinaryImage.h"
 #include "MirrorImage.h"
@@ -33,7 +34,7 @@ ImageWindow::ImageWindow(QWidget *parent) :
     connect(ui->graphicsViewInitial->horizontalScrollBar(), &QScrollBar::valueChanged,ui->graphicsViewModified->horizontalScrollBar(), &QScrollBar::setValue);
     connect(ui->graphicsViewInitial->verticalScrollBar(),   &QScrollBar::valueChanged, ui->graphicsViewModified->verticalScrollBar(),  &QScrollBar::setValue);
 
-    connect(m_initialImage, &ProcessedImageScene::selectedImage, m_modifiedImage, &ProcessedImageScene::getSelectedImage);
+    connect(m_initialImage, &ProcessedImageScene::selectedImage, m_modifiedImage, &ProcessedImageScene::setSelectedImage);
 
     connect(ui->actionGreyscale,     &QAction::triggered, this, &ImageWindow::loadGreyscale);
     connect(ui->actionColor,         &QAction::triggered, this, &ImageWindow::loadColor);
@@ -54,9 +55,15 @@ ImageWindow::~ImageWindow()
 
 void ImageWindow::loadGreyscale()
 {
-    QImage* image=loadImage();
+    std::unique_ptr<QImage> image =std::make_unique<QImage>();
+    image.reset(loadImage());
+
+    Grayscale grayscaleModifier;
+
+    QImage* grayscaleImage = grayscaleModifier.modify(image.get());   
+
     m_initialImage->clear();
-    m_initialImage->addImage(image,true);
+    m_initialImage->addImage(grayscaleImage);
 }
 
 void ImageWindow::loadColor()

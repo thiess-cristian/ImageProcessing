@@ -15,7 +15,7 @@ public:
     ProcessedImageScene();
     ~ProcessedImageScene();
 
-    void addImage(QImage* image,bool grey=false);
+    void addImage(QImage* image);
     QImage* getImage()const;
 
     void toggleSelection();
@@ -24,7 +24,7 @@ signals:
     void selectedImage(QImage* image);
 
 public slots:
-    void getSelectedImage(QImage* image);
+    void setSelectedImage(QImage* image);
 
 protected:
     void mouseMoveEvent(QGraphicsSceneMouseEvent* mouseEvent)override;

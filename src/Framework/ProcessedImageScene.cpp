@@ -17,28 +17,9 @@ ProcessedImageScene::~ProcessedImageScene()
     }
 }
 
-void ProcessedImageScene::addImage(QImage * image, bool grey)
+void ProcessedImageScene::addImage(QImage * image)
 {
-    if (grey) {
-
-        int width = image->width();
-        int height = image->height();
-        
-
-        QImage* newImage = new QImage(width, height, QImage::Format_RGB32);
-
-        for (int i = 0; i < width; i++) {
-            for (int j = 0; j < height; j++) {
-                char cl = qGray(image->pixel(i, j));
-                newImage->setPixelColor(i, j, qRgb(cl, cl, cl));
-            }
-        }
-
-        m_image = newImage;
-        delete image;
-    } else {
-        m_image=image;
-    }
+    m_image=image; 
     QGraphicsPixmapItem* item = new QGraphicsPixmapItem(QPixmap::fromImage(*m_image));
     addItem(item);
 }
@@ -80,7 +61,7 @@ void ProcessedImageScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent
 }
 
 
-void ProcessedImageScene::getSelectedImage(QImage* image)
+void ProcessedImageScene::setSelectedImage(QImage* image)
 {
     clear();
     addImage(image);

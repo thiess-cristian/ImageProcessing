@@ -16,8 +16,8 @@ public:
     ~ImageWindow();
 
 protected slots:
-    void loadGreyscale();
-    void loadColor();
+    void loadGreyscaleImage();
+    void loadColorImage();
     void invertColors();
     void mirrorImage();
     void binaryImage();

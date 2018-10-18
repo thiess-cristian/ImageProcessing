@@ -18,12 +18,9 @@ public:
 protected slots:
     void loadGreyscaleImage();
     void loadColorImage();
-    void invertColors();
-    void mirrorImage();
-    void binaryImage();
     void histogram();
     void selectImage();
-    void colorHistogramEqualization();
+    void imageModifierClicked();
 
 private:
 

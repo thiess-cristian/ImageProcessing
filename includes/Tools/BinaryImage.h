@@ -1,16 +1,13 @@
 #pragma once
+#include "IImageModifier.h"
 
 class QImage;
 
-class BinaryImage
+class BinaryImage:public IImageModifier
 {
 public:
     BinaryImage();
     ~BinaryImage();
 
-    static QImage* modify(QImage* image);
-
-private:
-
-
+    QImage* modify(QImage* image);
 };

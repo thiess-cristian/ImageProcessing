@@ -1,16 +1,13 @@
 #pragma once
-
-#include <functional>
+#include "IImageModifier.h"
 
 class QImage;
 
-class InvertColors
+class InvertColors:public IImageModifier
 {
 public:
     InvertColors();
     ~InvertColors();
 
-    static std::function<QImage*(QImage*)> getModifier();
-
-    static QImage* modify(QImage* image);
+    QImage* modify(QImage* image);
 };

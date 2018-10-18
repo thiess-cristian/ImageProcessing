@@ -31,30 +31,30 @@ ImageWindow::ImageWindow(QWidget *parent) :
     ui->graphicsViewModified->setScene(m_modifiedImage);
     ui->graphicsViewInitial->setScene(m_initialImage);
 
-    connect(ui->graphicsViewInitial->horizontalScrollBar(), &QScrollBar::valueChanged,ui->graphicsViewModified->horizontalScrollBar(), &QScrollBar::setValue);
-    connect(ui->graphicsViewInitial->verticalScrollBar(),   &QScrollBar::valueChanged,ui->graphicsViewModified->verticalScrollBar(),   &QScrollBar::setValue);
+    // make scrollbars scroll at the same time
+    QObject::connect(ui->graphicsViewInitial->horizontalScrollBar(),  &QScrollBar::valueChanged,ui->graphicsViewModified->horizontalScrollBar(), &QScrollBar::setValue);
+    QObject::connect(ui->graphicsViewInitial->verticalScrollBar(),    &QScrollBar::valueChanged,ui->graphicsViewModified->verticalScrollBar(),   &QScrollBar::setValue);
+    QObject::connect(ui->graphicsViewModified->horizontalScrollBar(), &QScrollBar::valueChanged,ui->graphicsViewInitial->horizontalScrollBar(),  &QScrollBar::setValue);
+    QObject::connect(ui->graphicsViewModified->verticalScrollBar(),   &QScrollBar::valueChanged,ui->graphicsViewInitial->verticalScrollBar(),    &QScrollBar::setValue);
 
-    connect(ui->graphicsViewModified->horizontalScrollBar(), &QScrollBar::valueChanged, ui->graphicsViewInitial->horizontalScrollBar(), &QScrollBar::setValue);
-    connect(ui->graphicsViewModified->verticalScrollBar(), &QScrollBar::valueChanged, ui->graphicsViewInitial->verticalScrollBar(), &QScrollBar::setValue);
+    //sends an image from a scene to another
+    QObject::connect(m_initialImage, &ProcessedImageScene::selectedImage, m_modifiedImage, &ProcessedImageScene::setSelectedImage);
 
-
-    connect(m_initialImage, &ProcessedImageScene::selectedImage, m_modifiedImage, &ProcessedImageScene::setSelectedImage);
-
-    connect(ui->actionGreyscale,     &QAction::triggered, this, &ImageWindow::loadGreyscaleImage);
-    connect(ui->actionColor,         &QAction::triggered, this, &ImageWindow::loadColorImage);
-    connect(ui->actionInvert_colors, &QAction::triggered, this, &ImageWindow::invertColors);
-    connect(ui->actionBinary_image,  &QAction::triggered, this, &ImageWindow::binaryImage);
-    connect(ui->actionMirror_image,  &QAction::triggered, this, &ImageWindow::mirrorImage);
-    connect(ui->actionHistogram,     &QAction::triggered, this, &ImageWindow::histogram);
-    connect(ui->actionSelect_image,  &QAction::triggered, this, &ImageWindow::selectImage);
-    connect(ui->actionColor_Histogram_Equalization, &QAction::triggered, this, &ImageWindow::colorHistogramEqualization);   
+    //connects the menu items to slots
+    QObject::connect(ui->actionInvert_colors,                &QAction::triggered, this, &ImageWindow::imageModifierClicked);
+    QObject::connect(ui->actionBinary_image,                 &QAction::triggered, this, &ImageWindow::imageModifierClicked);
+    QObject::connect(ui->actionMirror_image,                 &QAction::triggered, this, &ImageWindow::imageModifierClicked);
+    QObject::connect(ui->actionColor_Histogram_Equalization, &QAction::triggered, this, &ImageWindow::imageModifierClicked);
+    QObject::connect(ui->actionGreyscale,                    &QAction::triggered, this, &ImageWindow::loadGreyscaleImage);
+    QObject::connect(ui->actionColor,                        &QAction::triggered, this, &ImageWindow::loadColorImage);
+    QObject::connect(ui->actionHistogram,                    &QAction::triggered, this, &ImageWindow::histogram);
+    QObject::connect(ui->actionSelect_image,                 &QAction::triggered, this, &ImageWindow::selectImage);
 }
 
 ImageWindow::~ImageWindow()
 {
     delete ui;
 }
-
 
 void ImageWindow::loadGreyscaleImage()
 {
@@ -76,24 +76,6 @@ void ImageWindow::loadColorImage()
     m_initialImage->addImage(image);
 }
 
-void ImageWindow::invertColors()
-{
-    QImage* image=InvertColors::modify(m_initialImage->getImage());
-    setModifiedImage(image);
-}
-
-void ImageWindow::mirrorImage()
-{
-    QImage* image = MirrorImage::modify(m_initialImage->getImage());
-    setModifiedImage(image);
-}
-
-void ImageWindow::binaryImage()
-{
-    QImage* image = BinaryImage::modify(m_initialImage->getImage());
-    setModifiedImage(image);  
-}
-
 void ImageWindow::histogram()
 {
     Histogram histogram(m_initialImage->getImage());
@@ -107,13 +89,13 @@ void ImageWindow::selectImage()
     m_initialImage->toggleSelection();
 }
 
-void ImageWindow::colorHistogramEqualization()
+void ImageWindow::imageModifierClicked()
 {
+    QAction* selectedItem=dynamic_cast<QAction*>(QObject::sender());
+
     ImageModifierFactory factory;
 
-    auto modifier = factory.createNewImageModifier(ImageModifierNames::ColorHistogramEqualization);
-
-    //HistogramEqualizer equalizer;
+    auto modifier = factory.createNewImageModifier(selectedItem->text().toStdString());
     QImage* image = modifier->modify(m_initialImage->getImage());
     setModifiedImage(image);
 }

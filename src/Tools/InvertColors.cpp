@@ -8,14 +8,6 @@ InvertColors::InvertColors()
 InvertColors::~InvertColors()
 {}
 
-std::function<QImage*(QImage*)> InvertColors::getModifier()
-{
-    return [](QImage* image) {
-        
-        return image;
-    };   
-}
-
 QImage * InvertColors::modify(QImage * image)
 {
     QImage* modifiedImage=nullptr;

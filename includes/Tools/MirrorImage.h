@@ -1,17 +1,13 @@
 #pragma once
-
+#include "IImageModifier.h"
 
 class QImage;
 
-class MirrorImage
+class MirrorImage:public IImageModifier
 {
 public:
     MirrorImage();
     ~MirrorImage();
 
-    static QImage* modify(QImage* image);
-
-private:
-
-
+    QImage* modify(QImage* image);
 };

@@ -6,7 +6,6 @@
 class Ui_ImageWindow;
 class ProcessedImageScene;
 
-
 class ImageWindow : public QMainWindow
 {
     Q_OBJECT
@@ -20,6 +19,7 @@ protected slots:
     void loadColorImage();
     void histogram();
     void selectImage();
+    void magnifyImage();
     void imageModifierClicked();
 
 private:

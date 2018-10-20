@@ -19,6 +19,7 @@ public:
     QImage* getImage()const;
 
     void toggleSelection();
+    void toggleMagnifier();
 
 signals: 
     void selectedImage(QImage* image);

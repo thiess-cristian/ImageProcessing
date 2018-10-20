@@ -48,7 +48,9 @@ ImageWindow::ImageWindow(QWidget *parent) :
     QObject::connect(ui->actionGreyscale,                    &QAction::triggered, this, &ImageWindow::loadGreyscaleImage);
     QObject::connect(ui->actionColor,                        &QAction::triggered, this, &ImageWindow::loadColorImage);
     QObject::connect(ui->actionHistogram,                    &QAction::triggered, this, &ImageWindow::histogram);
+
     QObject::connect(ui->actionSelect_image,                 &QAction::triggered, this, &ImageWindow::selectImage);
+    QObject::connect(ui->actionMagnifier,                    &QAction::triggered, this, &ImageWindow::magnifyImage);
 }
 
 ImageWindow::~ImageWindow()
@@ -89,6 +91,11 @@ void ImageWindow::selectImage()
     m_initialImage->toggleSelection();
 }
 
+void ImageWindow::magnifyImage()
+{
+    m_initialImage->toggleMagnifier();
+}
+
 void ImageWindow::imageModifierClicked()
 {
     QAction* selectedItem=dynamic_cast<QAction*>(QObject::sender());
@@ -98,6 +105,8 @@ void ImageWindow::imageModifierClicked()
     auto modifier = factory.createNewImageModifier(selectedItem->text().toStdString());
     QImage* image = modifier->modify(m_initialImage->getImage());
     setModifiedImage(image);
+
+    delete modifier;
 }
 
 void ImageWindow::setModifiedImage(QImage * image)

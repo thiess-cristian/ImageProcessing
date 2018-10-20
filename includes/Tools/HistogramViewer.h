@@ -11,8 +11,6 @@
 class Ui_GraphWindow;
 class QImage;
 
-
-
 class HistogramViewer:public QWidget
 {
 public:
@@ -29,6 +27,5 @@ private:
     QtCharts::QChart *m_chart;
 
     const Histogram& m_histogram;
-
 };
 

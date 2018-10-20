@@ -1,5 +1,6 @@
 #include "ProcessedImageScene.h"
 #include "MouseSelectionTool.h"
+#include "Magnifier.h"
 
 #include "qgraphicsitem.h"
 #include "qimage.h"
@@ -40,6 +41,17 @@ void ProcessedImageScene::toggleSelection()
     }
 }
 
+void ProcessedImageScene::toggleMagnifier()
+{
+    m_mouseToolEnabled = !m_mouseToolEnabled;
+    if (m_mouseToolEnabled) {
+        m_mouseTool.release();
+        m_mouseTool.reset(new Magnifier(this));
+    } else {
+        m_mouseTool.release();
+    }
+}
+
 void ProcessedImageScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if (m_mouseTool != nullptr) {
@@ -59,7 +71,6 @@ void ProcessedImageScene::mouseReleaseEvent(QGraphicsSceneMouseEvent *mouseEvent
         m_mouseTool->processMouseRelease(mouseEvent);
     }
 }
-
 
 void ProcessedImageScene::setSelectedImage(QImage* image)
 {

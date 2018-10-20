@@ -8,7 +8,6 @@
 #include <vector>
 #include <map>
 
-
 HistogramViewer::HistogramViewer(const Histogram& histogram):m_histogram(histogram)
 {
     ui = std::make_unique<Ui_GraphWindow>();

@@ -4,8 +4,6 @@
 #include <memory>
 #include <qwidget.h>
 
-
-
 class Ui_GraphWindow;
 class MagnifiedPixel;
 class QGraphicsScene;

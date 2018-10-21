@@ -20,6 +20,7 @@ protected slots:
     void histogram();
     void selectImage();
     void magnifyImage();
+    void meanColors();
     void imageModifierClicked();
 
 private:

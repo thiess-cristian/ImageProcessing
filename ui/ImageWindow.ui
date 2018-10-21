@@ -119,6 +119,7 @@
      <string>Mouse Tools</string>
     </property>
     <addaction name="actionMagnifier"/>
+    <addaction name="actionMean"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuUtils"/>
@@ -174,6 +175,11 @@
   <action name="actionOtsu_binarization">
    <property name="text">
     <string>Otsu binarization</string>
+   </property>
+  </action>
+  <action name="actionMean">
+   <property name="text">
+    <string>Mean</string>
    </property>
   </action>
  </widget>

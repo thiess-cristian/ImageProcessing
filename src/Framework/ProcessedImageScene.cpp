@@ -1,6 +1,7 @@
 #include "ProcessedImageScene.h"
 #include "MouseSelectionTool.h"
 #include "Magnifier.h"
+#include "AverageColors.h"
 
 #include "qgraphicsitem.h"
 #include "qimage.h"
@@ -47,6 +48,17 @@ void ProcessedImageScene::toggleMagnifier()
     if (m_mouseToolEnabled) {
         m_mouseTool.release();
         m_mouseTool.reset(new Magnifier(this));
+    } else {
+        m_mouseTool.release();
+    }
+}
+
+void ProcessedImageScene::toggleMean()
+{
+    m_mouseToolEnabled = !m_mouseToolEnabled;
+    if (m_mouseToolEnabled) {
+        m_mouseTool.release();
+        m_mouseTool.reset(new AverageColors(this));
     } else {
         m_mouseTool.release();
     }

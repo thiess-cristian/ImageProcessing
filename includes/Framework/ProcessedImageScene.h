@@ -20,6 +20,7 @@ public:
 
     void toggleSelection();
     void toggleMagnifier();
+    void toggleMean();
 
 signals: 
     void selectedImage(QImage* image);

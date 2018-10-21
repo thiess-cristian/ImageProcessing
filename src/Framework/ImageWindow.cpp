@@ -54,6 +54,7 @@ ImageWindow::ImageWindow(QWidget *parent) :
 
     QObject::connect(ui->actionSelect_image,                 &QAction::triggered, this, &ImageWindow::selectImage);
     QObject::connect(ui->actionMagnifier,                    &QAction::triggered, this, &ImageWindow::magnifyImage);
+    QObject::connect(ui->actionMean,                         &QAction::triggered, this, &ImageWindow::meanColors);
 }
 
 ImageWindow::~ImageWindow()
@@ -97,6 +98,11 @@ void ImageWindow::selectImage()
 void ImageWindow::magnifyImage()
 {
     m_initialImage->toggleMagnifier();
+}
+
+void ImageWindow::meanColors()
+{
+    m_modifiedImage->toggleMean();
 }
 
 void ImageWindow::imageModifierClicked()

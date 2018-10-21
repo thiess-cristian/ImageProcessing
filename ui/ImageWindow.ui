@@ -112,6 +112,7 @@
     <addaction name="actionHistogram"/>
     <addaction name="actionSelect_image"/>
     <addaction name="actionColor_Histogram_Equalization"/>
+    <addaction name="actionOtsu_binarization"/>
    </widget>
    <widget class="QMenu" name="menuMouse_Tools">
     <property name="title">
@@ -168,6 +169,11 @@
   <action name="actionMagnifier">
    <property name="text">
     <string>Magnifier</string>
+   </property>
+  </action>
+  <action name="actionOtsu_binarization">
+   <property name="text">
+    <string>Otsu binarization</string>
    </property>
   </action>
  </widget>

@@ -5,14 +5,16 @@
 #include "BinaryImage.h"
 #include "InvertColors.h"
 #include "MirrorImage.h"
+#include "OtsuBinarization.h"
 
 
 ImageModifierFactory::ImageModifierFactory()
 {
-    m_imageModifiers[ImageModifierNames::BinaryImage] = []() {return new BinaryImage; };
-    m_imageModifiers[ImageModifierNames::InvertColors] = []() {return new InvertColors; };
-    m_imageModifiers[ImageModifierNames::MirrorImage] = []() {return new MirrorImage; };
+    m_imageModifiers[ImageModifierNames::BinaryImage] =                []() {return new BinaryImage; };
+    m_imageModifiers[ImageModifierNames::InvertColors] =               []() {return new InvertColors; };
+    m_imageModifiers[ImageModifierNames::MirrorImage] =                []() {return new MirrorImage; };
     m_imageModifiers[ImageModifierNames::ColorHistogramEqualization] = []() {return new HistogramEqualizer; };
+    m_imageModifiers[ImageModifierNames::OtsuBinarization] =           []() {return new OtsuBinarization; };
 }
 
 ImageModifierFactory::~ImageModifierFactory()

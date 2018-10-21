@@ -10,4 +10,7 @@ public:
     ~BinaryImage();
 
     QImage* modify(QImage* image);
+
+    void computeBinarization(QImage* input, QImage* output, int threshold);
+
 };

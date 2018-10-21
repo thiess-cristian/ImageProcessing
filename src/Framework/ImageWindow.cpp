@@ -45,6 +45,9 @@ ImageWindow::ImageWindow(QWidget *parent) :
     QObject::connect(ui->actionBinary_image,                 &QAction::triggered, this, &ImageWindow::imageModifierClicked);
     QObject::connect(ui->actionMirror_image,                 &QAction::triggered, this, &ImageWindow::imageModifierClicked);
     QObject::connect(ui->actionColor_Histogram_Equalization, &QAction::triggered, this, &ImageWindow::imageModifierClicked);
+    QObject::connect(ui->actionOtsu_binarization,            &QAction::triggered, this, &ImageWindow::imageModifierClicked);
+
+
     QObject::connect(ui->actionGreyscale,                    &QAction::triggered, this, &ImageWindow::loadGreyscaleImage);
     QObject::connect(ui->actionColor,                        &QAction::triggered, this, &ImageWindow::loadColorImage);
     QObject::connect(ui->actionHistogram,                    &QAction::triggered, this, &ImageWindow::histogram);

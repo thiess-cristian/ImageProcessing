@@ -10,7 +10,7 @@ public:
     Histogram(QImage* image);
     ~Histogram();
 
-    const std::map<size_t, size_t>& getHistogram() const ;
+    const std::map<size_t, size_t>& getHistogramValues() const ;
 
 private:
     std::map<size_t, size_t> m_histogram;

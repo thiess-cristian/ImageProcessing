@@ -29,18 +29,21 @@ QImage * BinaryImage::modify(QImage * image)
         }
 
         modifiedImage = new QImage(image->width(), image->height(), QImage::Format_RGB32);
+        computeBinarization(image, modifiedImage, alpha);
 
-        for (int i = 0; i < image->width(); i++) {
-            for (int j = 0; j < image->height(); j++) {
-                auto val = qGray(image->pixel(i, j));
-                //std::cout << val << std::endl;
-                if (val<alpha) {
-                    modifiedImage->setPixel(i, j, qRgb(0, 0, 0));
-                } else {
-                    modifiedImage->setPixel(i, j, qRgb(255, 255, 255));
-                }
+    }
+    return modifiedImage;
+}
+
+void BinaryImage::computeBinarization(QImage * input, QImage * output, int threshold)
+{
+    for (size_t i = 0; i < input->width(); i++) {
+        for (size_t j = 0; j < input->height(); j++) {
+            if (qGray(input->pixel(i, j))<threshold) {
+                output->setPixel(i, j, qRgb(0, 0, 0));
+            } else {
+                output->setPixel(i, j, qRgb(255, 255, 255));
             }
         }
     }
-    return modifiedImage;
 }

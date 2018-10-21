@@ -42,7 +42,7 @@ void HistogramViewer::display()
 {
     show();
 
-    auto histogram = m_histogram.getHistogram();
+    auto histogram = m_histogram.getHistogramValues();
 
     for (size_t i = 0; i <256; i++) {
         m_barSets[i] = new QBarSet("");

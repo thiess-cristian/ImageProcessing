@@ -7,4 +7,5 @@ namespace ImageModifierNames
     const std::string MirrorImage = "Mirror image";
     const std::string BinaryImage = "Binary image";
     const std::string ColorHistogramEqualization = "Color Histogram Equalization";
+    const std::string OtsuBinarization = "Otsu binarization";
 }

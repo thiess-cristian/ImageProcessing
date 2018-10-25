@@ -6,6 +6,7 @@
 #include "InvertColors.h"
 #include "MirrorImage.h"
 #include "OtsuBinarization.h"
+#include "VectorMedianFilter.h"
 
 
 ImageModifierFactory::ImageModifierFactory()
@@ -15,6 +16,8 @@ ImageModifierFactory::ImageModifierFactory()
     m_imageModifiers[ImageModifierNames::MirrorImage] =                []() {return new MirrorImage; };
     m_imageModifiers[ImageModifierNames::ColorHistogramEqualization] = []() {return new HistogramEqualizer; };
     m_imageModifiers[ImageModifierNames::OtsuBinarization] =           []() {return new OtsuBinarization; };
+    m_imageModifiers[ImageModifierNames::VectorMedianFilter3x3] =      []() {return new VectorMedianFilter(VectorMedianFilterGrid::GridSize::Grid3x3); };
+    m_imageModifiers[ImageModifierNames::VectorMedianFilter5x5] =      []() {return new VectorMedianFilter(VectorMedianFilterGrid::GridSize::Grid5x5); };
 }
 
 ImageModifierFactory::~ImageModifierFactory()

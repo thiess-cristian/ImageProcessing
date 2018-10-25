@@ -37,6 +37,8 @@ ImageWindow::ImageWindow(QWidget *parent) :
     QObject::connect(ui->graphicsViewModified->horizontalScrollBar(), &QScrollBar::valueChanged,ui->graphicsViewInitial->horizontalScrollBar(),  &QScrollBar::setValue);
     QObject::connect(ui->graphicsViewModified->verticalScrollBar(),   &QScrollBar::valueChanged,ui->graphicsViewInitial->verticalScrollBar(),    &QScrollBar::setValue);
 
+    QObject::connect(ui->horizontalSliderZoom,                        &QSlider::valueChanged,   this,                                            &ImageWindow::sliderZoom);
+
     //sends an image from a scene to another
     QObject::connect(m_initialImage, &ProcessedImageScene::selectedImage, m_modifiedImage, &ProcessedImageScene::setSelectedImage);
 
@@ -116,6 +118,24 @@ void ImageWindow::imageModifierClicked()
     setModifiedImage(image);
 
     delete modifier;
+}
+
+void ImageWindow::sliderZoom(int value)
+{
+    std::cout << value<<std::endl;
+
+    double scaleFactor = 0.0;
+
+    if (value < sliderZoomValue) {
+        scaleFactor = 0.95;
+        sliderZoomValue = value;
+    } else {
+        scaleFactor = 1.05;
+        sliderZoomValue = value;
+    }
+
+    ui->graphicsViewInitial->scale(scaleFactor, scaleFactor);
+    ui->graphicsViewModified->scale(scaleFactor, scaleFactor);
 }
 
 void ImageWindow::setModifiedImage(QImage * image)

@@ -5,7 +5,7 @@
 AverageColors::AverageColors(QObject* parent):
     QObject(parent)
 {
-    m_viewer = new AverageColorsViewer(*this);
+    m_viewer = std::make_unique<AverageColorsViewer>(*this);
 }
 
 AverageColors::~AverageColors()

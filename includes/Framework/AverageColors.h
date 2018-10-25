@@ -3,6 +3,7 @@
 
 #include <qobject.h>
 #include <map>
+#include <memory>
 
 class AverageColorsViewer;
 
@@ -22,7 +23,8 @@ public:
     virtual void processMouseRelease(QGraphicsSceneMouseEvent * mouseEvent) override;
 
 private:
-    AverageColorsViewer* m_viewer;
+    std::unique_ptr<AverageColorsViewer> m_viewer;
+
     double m_mean;
     double m_squaredDeviation;
 

@@ -23,8 +23,10 @@ protected slots:
     void meanColors();
     void imageModifierClicked();
 
-private:
+    void sliderZoom(int value);
 
+private:
+    int sliderZoomValue=50;
     void setModifiedImage(QImage* image);
 
     QImage* loadImage();

@@ -83,7 +83,7 @@ void ImageWindow::loadColorImage()
 
 void ImageWindow::histogram()
 {
-    Histogram histogram(m_initialImage->getImage());
+    GrayscaleHistogram histogram(m_initialImage->getImage());
 
     HistogramViewer* histogramViewer = new HistogramViewer(histogram);
     histogramViewer->display();

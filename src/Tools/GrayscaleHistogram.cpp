@@ -1,8 +1,8 @@
-#include "Histogram.h"
+#include "GrayscaleHistogram.h"
 
 #include <qimage.h>
 
-Histogram::Histogram(QImage * image)
+GrayscaleHistogram::GrayscaleHistogram(QImage * image)
 {
     for (size_t i = 0; i < 256; i++) {
         m_histogram[i] = 0;
@@ -16,10 +16,10 @@ Histogram::Histogram(QImage * image)
     }
 }
 
-Histogram::~Histogram()
+GrayscaleHistogram::~GrayscaleHistogram()
 {}
 
-const std::map<size_t, size_t>& Histogram::getHistogramValues() const
+const std::map<size_t, size_t>& GrayscaleHistogram::getHistogramValues() const
 {
     return m_histogram;
 }

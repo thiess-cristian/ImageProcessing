@@ -1,5 +1,5 @@
 #include "OtsuBinarization.h"
-#include "Histogram.h"
+#include "GrayscaleHistogram.h"
 #include "BinaryImage.h"
 
 #include <qimage.h>
@@ -16,7 +16,7 @@ QImage * OtsuBinarization::modify(QImage * image)
         return nullptr;
     }
 
-    Histogram histogram(image);
+    GrayscaleHistogram histogram(image);
 
     const std::map<size_t,size_t>& histogramValues = histogram.getHistogramValues();
     size_t numOfPixels = image->width()*image->height();

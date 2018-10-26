@@ -4,11 +4,11 @@
 
 class QImage;
 
-class Histogram
+class GrayscaleHistogram
 {
 public:
-    Histogram(QImage* image);
-    ~Histogram();
+    GrayscaleHistogram(QImage* image);
+    ~GrayscaleHistogram();
 
     const std::map<size_t, size_t>& getHistogramValues() const ;
 

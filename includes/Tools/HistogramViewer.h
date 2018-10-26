@@ -1,6 +1,5 @@
 #pragma once
-
-#include "Histogram.h"
+#include "GrayscaleHistogram.h"
 
 #include <memory>
 #include <vector>
@@ -14,7 +13,7 @@ class QImage;
 class HistogramViewer:public QWidget
 {
 public:
-    HistogramViewer(const Histogram& histogram);
+    HistogramViewer(const GrayscaleHistogram& histogram);
     ~HistogramViewer();
 
     void display();
@@ -26,6 +25,6 @@ private:
     std::vector<QtCharts::QBarSet*> m_barSets;
     QtCharts::QChart *m_chart;
 
-    const Histogram& m_histogram;
+    const GrayscaleHistogram& m_histogram;
 };
 

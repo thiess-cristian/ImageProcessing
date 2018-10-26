@@ -106,6 +106,13 @@
     <property name="title">
      <string>Tools</string>
     </property>
+    <widget class="QMenu" name="menuVector_median_filter">
+     <property name="title">
+      <string>Vector median filter</string>
+     </property>
+     <addaction name="action3x3"/>
+     <addaction name="action5x5"/>
+    </widget>
     <addaction name="actionInvert_colors"/>
     <addaction name="actionMirror_image"/>
     <addaction name="actionBinary_image"/>
@@ -113,6 +120,7 @@
     <addaction name="actionSelect_image"/>
     <addaction name="actionColor_Histogram_Equalization"/>
     <addaction name="actionOtsu_binarization"/>
+    <addaction name="menuVector_median_filter"/>
    </widget>
    <widget class="QMenu" name="menuMouse_Tools">
     <property name="title">
@@ -180,6 +188,16 @@
   <action name="actionMean">
    <property name="text">
     <string>Mean</string>
+   </property>
+  </action>
+  <action name="action3x3">
+   <property name="text">
+    <string>3x3</string>
+   </property>
+  </action>
+  <action name="action5x5">
+   <property name="text">
+    <string>5x5</string>
    </property>
   </action>
  </widget>

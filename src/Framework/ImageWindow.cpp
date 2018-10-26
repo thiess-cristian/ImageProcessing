@@ -3,11 +3,7 @@
 #include "ProcessedImageScene.h"
 
 #include "Grayscale.h"
-#include "InvertColors.h"
-#include "BinaryImage.h"
-#include "MirrorImage.h"
 #include "HistogramViewer.h"
-#include "HistogramEqualizer.h"
 
 #include "ImageModifierFactory.h"
 #include "ImageModifierNames.h"
@@ -48,7 +44,8 @@ ImageWindow::ImageWindow(QWidget *parent) :
     QObject::connect(ui->actionMirror_image,                 &QAction::triggered, this, &ImageWindow::imageModifierClicked);
     QObject::connect(ui->actionColor_Histogram_Equalization, &QAction::triggered, this, &ImageWindow::imageModifierClicked);
     QObject::connect(ui->actionOtsu_binarization,            &QAction::triggered, this, &ImageWindow::imageModifierClicked);
-
+    QObject::connect(ui->action3x3,                          &QAction::triggered, this, &ImageWindow::imageModifierClicked);
+    QObject::connect(ui->action5x5,                          &QAction::triggered, this, &ImageWindow::imageModifierClicked);
 
     QObject::connect(ui->actionGreyscale,                    &QAction::triggered, this, &ImageWindow::loadGreyscaleImage);
     QObject::connect(ui->actionColor,                        &QAction::triggered, this, &ImageWindow::loadColorImage);

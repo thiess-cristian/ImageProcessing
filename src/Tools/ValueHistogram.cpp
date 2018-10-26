@@ -1,28 +1,24 @@
-#include "GrayscaleHistogram.h"
-
+#include "ValueHistogram.h"
 #include <qimage.h>
 
-GrayscaleHistogram::GrayscaleHistogram(QImage * image)
+ValueHistogram::ValueHistogram(QImage * image)
 {
     computeHistogram(image);
 }
 
-GrayscaleHistogram::~GrayscaleHistogram()
+ValueHistogram::~ValueHistogram()
 {}
 
-
-void GrayscaleHistogram::computeHistogram(QImage * image)
+void ValueHistogram::computeHistogram(QImage * image)
 {
-
     for (size_t i = 0; i < 256; i++) {
         m_histogram[i] = 0;
     }
 
     for (size_t i = 0; i < image->width(); i++) {
         for (size_t j = 0; j < image->height(); j++) {
-            auto val = qGray(image->pixel(i, j));
+            auto val = image->pixelColor(i, j).value();
             m_histogram[val]++;
         }
     }
 }
-

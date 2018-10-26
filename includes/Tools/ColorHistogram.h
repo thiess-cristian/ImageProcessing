@@ -1,13 +1,11 @@
 #pragma once
-
 #include "IHistogram.h"
-#include <map>
 
-class GrayscaleHistogram:public IHistogram
+class ColorHistogram :public IHistogram
 {
 public:
-    GrayscaleHistogram(QImage* image);
-    ~GrayscaleHistogram();
+    ColorHistogram(QImage* image);
+    ~ColorHistogram();
 
 private:
     // Inherited via IHistogram

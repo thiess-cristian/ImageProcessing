@@ -8,7 +8,7 @@
 #include <vector>
 #include <map>
 
-HistogramViewer::HistogramViewer(const GrayscaleHistogram& histogram):m_histogram(histogram)
+HistogramViewer::HistogramViewer(const IHistogram& histogram):m_histogram(histogram)
 {
     ui = std::make_unique<Ui_GraphWindow>();
     ui->setupUi(this);

@@ -8,12 +8,11 @@
 #include <qbarseries.h>
 
 class Ui_GraphWindow;
-class QImage;
 
 class HistogramViewer:public QWidget
 {
 public:
-    HistogramViewer(const GrayscaleHistogram& histogram);
+    HistogramViewer(const IHistogram& histogram);
     ~HistogramViewer();
 
     void display();
@@ -25,6 +24,6 @@ private:
     std::vector<QtCharts::QBarSet*> m_barSets;
     QtCharts::QChart *m_chart;
 
-    const GrayscaleHistogram& m_histogram;
+    const IHistogram& m_histogram;
 };
 

@@ -22,6 +22,7 @@ protected slots:
     void magnifyImage();
     void meanColors();
     void imageModifierClicked();
+    void plotter();
 
     void sliderZoom(int value);
 

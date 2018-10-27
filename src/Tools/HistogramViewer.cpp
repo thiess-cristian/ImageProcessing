@@ -21,7 +21,7 @@ HistogramViewer::HistogramViewer(const IHistogram& histogram):m_histogram(histog
 
     m_chart = new QChart();
 
-    m_chart->setTitle("Grayscale histogram");
+    m_chart->setTitle("Histogram");
     m_chart->setAnimationOptions(QChart::SeriesAnimations);
     m_chart->setBackgroundBrush(QBrush(QColor(192, 210, 210)));
     m_chart->setMargins(QMargins(0, 0, 0, 0));

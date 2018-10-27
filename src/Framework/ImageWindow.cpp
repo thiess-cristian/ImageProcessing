@@ -141,10 +141,13 @@ void ImageWindow::imageModifierClicked()
     delete modifier;
 }
 
+void ImageWindow::plotter()
+{
+    
+}
+
 void ImageWindow::sliderZoom(int value)
 {
-    std::cout << value<<std::endl;
-
     double scaleFactor = 0.0;
 
     if (value < sliderZoomValue) {

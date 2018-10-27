@@ -135,6 +135,7 @@
     <addaction name="actionMagnifier"/>
     <addaction name="actionSelect_image"/>
     <addaction name="actionMean"/>
+    <addaction name="actionPlotter"/>
    </widget>
    <addaction name="menuFile"/>
    <addaction name="menuUtils"/>
@@ -210,6 +211,11 @@
   <action name="actionValueHistogram">
    <property name="text">
     <string>Value</string>
+   </property>
+  </action>
+  <action name="actionPlotter">
+   <property name="text">
+    <string>Plotter</string>
    </property>
   </action>
  </widget>

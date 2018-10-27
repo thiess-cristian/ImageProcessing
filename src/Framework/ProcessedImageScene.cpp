@@ -64,6 +64,17 @@ void ProcessedImageScene::toggleMean()
     }
 }
 
+void ProcessedImageScene::togglePlotter()
+{
+    m_mouseToolEnabled = !m_mouseToolEnabled;
+    if (m_mouseToolEnabled) {
+        m_mouseTool.release();
+        m_mouseTool.reset(new AverageColors(this));
+    } else {
+        m_mouseTool.release();
+    }
+}
+
 void ProcessedImageScene::mouseMoveEvent(QGraphicsSceneMouseEvent *mouseEvent)
 {
     if (m_mouseTool != nullptr) {

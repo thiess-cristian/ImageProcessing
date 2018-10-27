@@ -101,6 +101,14 @@
     <property name="title">
      <string>Utils</string>
     </property>
+    <widget class="QMenu" name="menuHistogram">
+     <property name="title">
+      <string>Histogram</string>
+     </property>
+     <addaction name="actionGrayscaleHistogram"/>
+     <addaction name="actionValueHistogram"/>
+    </widget>
+    <addaction name="menuHistogram"/>
    </widget>
    <widget class="QMenu" name="menuTools">
     <property name="title">
@@ -116,8 +124,6 @@
     <addaction name="actionInvert_colors"/>
     <addaction name="actionMirror_image"/>
     <addaction name="actionBinary_image"/>
-    <addaction name="actionHistogram"/>
-    <addaction name="actionSelect_image"/>
     <addaction name="actionColor_Histogram_Equalization"/>
     <addaction name="actionOtsu_binarization"/>
     <addaction name="menuVector_median_filter"/>
@@ -127,6 +133,7 @@
      <string>Mouse Tools</string>
     </property>
     <addaction name="actionMagnifier"/>
+    <addaction name="actionSelect_image"/>
     <addaction name="actionMean"/>
    </widget>
    <addaction name="menuFile"/>
@@ -158,11 +165,6 @@
   <action name="actionBinary_image">
    <property name="text">
     <string>Binary image</string>
-   </property>
-  </action>
-  <action name="actionHistogram">
-   <property name="text">
-    <string>Histogram</string>
    </property>
   </action>
   <action name="actionSelect_image">
@@ -198,6 +200,16 @@
   <action name="action5x5">
    <property name="text">
     <string>5x5</string>
+   </property>
+  </action>
+  <action name="actionGrayscaleHistogram">
+   <property name="text">
+    <string>Grayscale</string>
+   </property>
+  </action>
+  <action name="actionValueHistogram">
+   <property name="text">
+    <string>Value</string>
    </property>
   </action>
  </widget>

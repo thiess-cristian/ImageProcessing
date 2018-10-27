@@ -13,6 +13,9 @@ GrayscaleHistogram::~GrayscaleHistogram()
 
 void GrayscaleHistogram::computeHistogram(QImage * image)
 {
+    if (image == nullptr) {
+        return;
+    }
 
     for (size_t i = 0; i < 256; i++) {
         m_histogram[i] = 0;

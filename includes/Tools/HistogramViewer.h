@@ -1,5 +1,6 @@
 #pragma once
 #include "GrayscaleHistogram.h"
+#include "ValueHistogram.h"
 
 #include <memory>
 #include <vector>

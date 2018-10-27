@@ -49,7 +49,8 @@ ImageWindow::ImageWindow(QWidget *parent) :
 
     QObject::connect(ui->actionGreyscale,                    &QAction::triggered, this, &ImageWindow::loadGreyscaleImage);
     QObject::connect(ui->actionColor,                        &QAction::triggered, this, &ImageWindow::loadColorImage);
-    QObject::connect(ui->actionHistogram,                    &QAction::triggered, this, &ImageWindow::histogram);
+    QObject::connect(ui->actionGrayscaleHistogram,           &QAction::triggered, this, &ImageWindow::histogram);
+    QObject::connect(ui->actionValueHistogram,               &QAction::triggered, this, &ImageWindow::histogram);
 
     QObject::connect(ui->actionSelect_image,                 &QAction::triggered, this, &ImageWindow::selectImage);
     QObject::connect(ui->actionMagnifier,                    &QAction::triggered, this, &ImageWindow::magnifyImage);
@@ -83,10 +84,33 @@ void ImageWindow::loadColorImage()
 
 void ImageWindow::histogram()
 {
-    GrayscaleHistogram histogram(m_initialImage->getImage());
+    QAction* selectedItem = dynamic_cast<QAction*>(QObject::sender());
 
-    HistogramViewer* histogramViewer = new HistogramViewer(histogram);
-    histogramViewer->display();
+    auto grayscaleHistogram = [](auto image) {
+        if (image != nullptr) {
+            GrayscaleHistogram histogram(image);
+
+            HistogramViewer* histogramViewer = new HistogramViewer(histogram);
+            histogramViewer->display();
+        }
+    };
+
+    auto valueHistogram = [](auto image) {
+        if (image != nullptr) {
+            ValueHistogram histogram(image);
+
+            HistogramViewer* histogramViewer = new HistogramViewer(histogram);
+            histogramViewer->display();
+        }
+    };
+
+    if (selectedItem->objectName() == ui->actionGrayscaleHistogram->objectName()) {
+        grayscaleHistogram(m_initialImage->getImage());
+        grayscaleHistogram(m_modifiedImage->getImage());
+    } else if (selectedItem->objectName() == ui->actionValueHistogram->objectName()) {
+        valueHistogram(m_initialImage->getImage());
+        valueHistogram(m_modifiedImage->getImage());
+    }
 }
 
 void ImageWindow::selectImage()

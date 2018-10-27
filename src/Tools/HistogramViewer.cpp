@@ -44,11 +44,21 @@ void HistogramViewer::display()
 
     auto histogram = m_histogram.getHistogramValues();
 
+
+    auto setBarsColor = [&](auto barSets,auto i) {
+        if (typeid(m_histogram) == typeid(GrayscaleHistogram)) {
+            barSets->setBrush(QColor(i, i, i));
+            barSets->setBorderColor(QColor(i, i, i));
+        } else if (typeid(m_histogram) == typeid(ValueHistogram)) {
+            barSets->setBrush(QColor(0, 0, 0));
+            barSets->setBorderColor(QColor(0, 0, 0));
+        }
+    };
+
     for (size_t i = 0; i <256; i++) {
         m_barSets[i] = new QBarSet("");
         *m_barSets[i] << histogram[i];
-        m_barSets[i]->setBrush(QColor(i, i, i));
-        m_barSets[i]->setBorderColor(QColor(i, i, i));
+        setBarsColor(m_barSets[i], i);
        
         m_series->append(m_barSets[i]);
     } 

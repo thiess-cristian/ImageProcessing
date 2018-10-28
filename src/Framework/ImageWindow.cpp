@@ -55,6 +55,7 @@ ImageWindow::ImageWindow(QWidget *parent) :
     QObject::connect(ui->actionSelect_image,                 &QAction::triggered, this, &ImageWindow::selectImage);
     QObject::connect(ui->actionMagnifier,                    &QAction::triggered, this, &ImageWindow::magnifyImage);
     QObject::connect(ui->actionMean,                         &QAction::triggered, this, &ImageWindow::meanColors);
+    QObject::connect(ui->actionPlotter,                      &QAction::triggered, this, &ImageWindow::plotter);
 }
 
 ImageWindow::~ImageWindow()
@@ -143,7 +144,7 @@ void ImageWindow::imageModifierClicked()
 
 void ImageWindow::plotter()
 {
-    
+    m_initialImage->togglePlotter();
 }
 
 void ImageWindow::sliderZoom(int value)

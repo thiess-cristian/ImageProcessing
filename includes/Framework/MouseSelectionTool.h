@@ -3,6 +3,8 @@
 #include <qobject.h>
 #include <qrect.h>
 
+class QGraphicsRectItem;
+
 class MouseSelectionTool:public QObject,public IMouseTool
 {
 public:
@@ -16,4 +18,5 @@ public:
 
 private:
     QRect m_selection;
+    QGraphicsRectItem* m_addedRect=nullptr;
 };

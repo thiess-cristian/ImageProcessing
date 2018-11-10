@@ -45,7 +45,7 @@ void Magnifier::processMousePress(QGraphicsSceneMouseEvent * mouseEvent)
             QColor pixelColor = image->pixelColor(i, j);
             std::string value = QString::number(qGray(image->pixel(i, j))).toStdString();
 
-            MagnifiedPixel* magnifiedPixel = new MagnifiedPixel(pixelX*width,pixelY*width,width,pixelColor,value);
+            MagnifiedPixel* magnifiedPixel = new MagnifiedPixel(pixelX*width, pixelY*width, width, pixelColor, value);
             pixels.push_back(magnifiedPixel);
 
             pixelY++;

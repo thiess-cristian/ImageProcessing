@@ -5,6 +5,13 @@
 #define _USE_MATH_DEFINES 
 #include <math.h>
 
+#include <qdialog.h>
+#include <qformlayout.h>
+#include <qlabel.h>
+#include <qlist.h>
+#include <qlineedit.h>
+#include <qdialogbuttonbox.h>
+
 GaussFilter::GaussFilter():
     m_gridSize(5),
     m_mask(std::vector<double>(m_gridSize*m_gridSize))
@@ -42,13 +49,12 @@ QImage * GaussFilter::modify(QImage * image)
     QImage* modifiedImage = new QImage(image->copy(QRect(0, 0, image->width(), image->height())));
 
     size_t border = m_gridSize / 2;
-    
+
     for (size_t i = border; i < image->width() - border; i++) {
         for (size_t j = border; j < image->height() - border; j++) {
-            modifiedImage->setPixelColor(i, j, getFilteredColor(image,i,j));
+            modifiedImage->setPixelColor(i, j, getFilteredColor(image, i, j));
         }
     }
-
     return modifiedImage;
 }
 

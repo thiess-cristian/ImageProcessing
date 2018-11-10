@@ -12,4 +12,5 @@ namespace ImageModifierNames
     const std::string VectorMedianFilter3x3 = "3x3";
     const std::string Canny = "Canny";
     const std::string GaussFilter = "Gauss filter";
+    const std::string Sobel = "Sobel";
 }

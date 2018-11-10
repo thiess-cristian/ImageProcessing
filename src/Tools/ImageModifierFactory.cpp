@@ -9,6 +9,7 @@
 #include "VectorMedianFilter.h"
 #include "GaussFilter.h"
 #include "Canny.h"
+#include "Sobel.h"
 
 
 ImageModifierFactory::ImageModifierFactory()
@@ -22,6 +23,7 @@ ImageModifierFactory::ImageModifierFactory()
     m_imageModifiers[ImageModifierNames::VectorMedianFilter5x5] =      []() {return new VectorMedianFilter(VectorMedianFilterGrid::GridSize::Grid5x5); };
     m_imageModifiers[ImageModifierNames::Canny] =                      []() {return new Canny(); };
     m_imageModifiers[ImageModifierNames::GaussFilter] =                []() {return new GaussFilter(); };
+    m_imageModifiers[ImageModifierNames::Sobel] =                      []() {return new Sobel(); };
 }
 
 ImageModifierFactory::~ImageModifierFactory()

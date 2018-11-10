@@ -15,6 +15,7 @@
 #include <qgraphicsitem.h>
 #include <qevent.h>
 #include <qscrollbar.h>
+#include <QtConcurrent\qtconcurrentrun.h>
 
 ImageWindow::ImageWindow(QWidget *parent) :
     QMainWindow(parent),
@@ -46,6 +47,8 @@ ImageWindow::ImageWindow(QWidget *parent) :
     QObject::connect(ui->actionOtsu_binarization,            &QAction::triggered, this, &ImageWindow::imageModifierClicked);
     QObject::connect(ui->action3x3,                          &QAction::triggered, this, &ImageWindow::imageModifierClicked);
     QObject::connect(ui->action5x5,                          &QAction::triggered, this, &ImageWindow::imageModifierClicked);
+    QObject::connect(ui->actionCanny,                        &QAction::triggered, this, &ImageWindow::imageModifierClicked);
+    QObject::connect(ui->actionGauss_filter,                 &QAction::triggered, this, &ImageWindow::imageModifierClicked);
 
     QObject::connect(ui->actionGreyscale,                    &QAction::triggered, this, &ImageWindow::loadGreyscaleImage);
     QObject::connect(ui->actionColor,                        &QAction::triggered, this, &ImageWindow::loadColorImage);
@@ -135,11 +138,13 @@ void ImageWindow::imageModifierClicked()
 
     ImageModifierFactory factory;
 
-    auto modifier = factory.createNewImageModifier(selectedItem->text().toStdString());
-    QImage* image = modifier->modify(m_initialImage->getImage());
-    setModifiedImage(image);
-
-    delete modifier;
+    //auto f = [&]() {
+        auto modifier = factory.createNewImageModifier(selectedItem->text().toStdString());
+        QImage* image = modifier->modify(m_initialImage->getImage());
+        delete modifier;
+        setModifiedImage(image);
+   // };
+   // QtConcurrent::run(f);
 }
 
 void ImageWindow::plotter()
@@ -152,7 +157,7 @@ void ImageWindow::sliderZoom(int value)
     double scaleFactor = 0.0;
 
     if (value < sliderZoomValue) {
-        scaleFactor = 0.95;
+        scaleFactor = 1/1.05;
         sliderZoomValue = value;
     } else {
         scaleFactor = 1.05;

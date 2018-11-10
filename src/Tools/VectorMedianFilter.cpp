@@ -3,11 +3,11 @@
 #include <qimage.h>
 #include <qcolor.h>
 #include <iostream>
+#include <limits.h>
 
 VectorMedianFilter::VectorMedianFilter(VectorMedianFilterGrid::GridSize size):
     m_gridSize(static_cast<size_t>(size))
 {
-
 }
 
 VectorMedianFilter::~VectorMedianFilter()
@@ -58,8 +58,8 @@ QColor VectorMedianFilter::getNearestColor(const std::vector<QColor>& colors) co
             distanceVec[i + j*numColors] = distance;
         }
     }
-
-    double minDistace = DBL_MAX;
+    
+    double minDistace = std::numeric_limits<double>::max();
     size_t colorIndex=0;
     for (size_t i = 0; i < numColors; i++) {
         double distanceSum=0.0;
@@ -73,6 +73,5 @@ QColor VectorMedianFilter::getNearestColor(const std::vector<QColor>& colors) co
             colorIndex = i;
         }
     }
-
     return colors[colorIndex];
 }

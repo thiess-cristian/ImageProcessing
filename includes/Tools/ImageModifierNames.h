@@ -10,4 +10,6 @@ namespace ImageModifierNames
     const std::string OtsuBinarization = "Otsu binarization";
     const std::string VectorMedianFilter5x5 = "5x5";
     const std::string VectorMedianFilter3x3 = "3x3";
+    const std::string Canny = "Canny";
+    const std::string GaussFilter = "Gauss filter";
 }

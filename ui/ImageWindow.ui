@@ -127,6 +127,8 @@
     <addaction name="actionColor_Histogram_Equalization"/>
     <addaction name="actionOtsu_binarization"/>
     <addaction name="menuVector_median_filter"/>
+    <addaction name="actionCanny"/>
+    <addaction name="actionGauss_filter"/>
    </widget>
    <widget class="QMenu" name="menuMouse_Tools">
     <property name="title">
@@ -216,6 +218,16 @@
   <action name="actionPlotter">
    <property name="text">
     <string>Plotter</string>
+   </property>
+  </action>
+  <action name="actionCanny">
+   <property name="text">
+    <string>Canny</string>
+   </property>
+  </action>
+  <action name="actionGauss_filter">
+   <property name="text">
+    <string>Gauss filter</string>
    </property>
   </action>
  </widget>

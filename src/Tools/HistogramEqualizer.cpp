@@ -53,12 +53,9 @@ QImage * HistogramEqualizer::modify(QImage * image)
     for (size_t i = 0; i < image->width(); i++) {
         for (size_t j = 0; j < image->height(); j++) {
             QColor hsvColor = image->pixelColor(i, j);
-
             hsvColor.setHsv(hsvColor.hsvHue(), hsvColor.hsvSaturation(), valueTable[hsvColor.value()]);
-
             modifiedImage->setPixelColor(i, j, hsvColor);
         }
     }
-
     return modifiedImage;
 }

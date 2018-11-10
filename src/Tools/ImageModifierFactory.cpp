@@ -7,6 +7,8 @@
 #include "MirrorImage.h"
 #include "OtsuBinarization.h"
 #include "VectorMedianFilter.h"
+#include "GaussFilter.h"
+#include "Canny.h"
 
 
 ImageModifierFactory::ImageModifierFactory()
@@ -18,6 +20,8 @@ ImageModifierFactory::ImageModifierFactory()
     m_imageModifiers[ImageModifierNames::OtsuBinarization] =           []() {return new OtsuBinarization; };
     m_imageModifiers[ImageModifierNames::VectorMedianFilter3x3] =      []() {return new VectorMedianFilter(VectorMedianFilterGrid::GridSize::Grid3x3); };
     m_imageModifiers[ImageModifierNames::VectorMedianFilter5x5] =      []() {return new VectorMedianFilter(VectorMedianFilterGrid::GridSize::Grid5x5); };
+    m_imageModifiers[ImageModifierNames::Canny] =                      []() {return new Canny(); };
+    m_imageModifiers[ImageModifierNames::GaussFilter] =                []() {return new GaussFilter(); };
 }
 
 ImageModifierFactory::~ImageModifierFactory()

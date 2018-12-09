@@ -6,7 +6,7 @@
 class Sobel :public IImageModifier
 {
 public:
-    Sobel();
+    Sobel(size_t t1 = 60, size_t t2 = 100);
     // Inherited via IImageModifier
     virtual QImage * modify(QImage * image) override;
 
@@ -14,6 +14,9 @@ public:
     std::vector<double> getEdgeDirection() const;
 
 private:
+
+    size_t m_t1 = 60;
+    size_t m_t2 = 100;
 
     QColor getSobelColor(QImage* image, int x, int y);
     double angle(double sumX, double sumY);

@@ -1,14 +1,16 @@
 #include "Sobel.h"
 #include "qimage.h"
 
-Sobel::Sobel():
+Sobel::Sobel(size_t t1, size_t t2):
     m_Sx({-1, 0, 1,
           -2, 0, 2,
           -1, 0, 1}),
     m_Sy({-1,-2,-1,
            0, 0, 0,
            1, 2, 1}),
-    m_gridSize(3)
+    m_gridSize(3),
+    m_t1(t1),
+    m_t2(t2)
 {
     
 }
@@ -63,14 +65,14 @@ QColor Sobel::getSobelColor(QImage * image, int x, int y)
    
     double value = std::abs(sumX) + std::abs(sumY);
 
-    m_grad[x*image->height()+y] = value;
+    m_grad[x*image->height() + y] = value;
 
     m_edgeDir[x*image->height() + y]=angle(sumX, sumY);
 
-    if (value > 100) {
+    if (value > m_t2) {
         value = 0;
     }
-    else if (value < 60) {
+    else if (value < m_t1) {
         value = 255;
     }
     auto col = 255 - value;
@@ -94,6 +96,5 @@ double Sobel::angle(double sumX, double sumY)
     if (((thisAngle > 112.5) && (thisAngle < 157.5)) || ((thisAngle < -22.5) && (thisAngle > -67.5))) {
         returnedAngle = 135;
     }
-
     return returnedAngle;
 }

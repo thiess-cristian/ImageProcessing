@@ -50,6 +50,7 @@ ImageWindow::ImageWindow(QWidget *parent) :
     QObject::connect(ui->actionCanny,                        &QAction::triggered, this, &ImageWindow::imageModifierClicked);
     QObject::connect(ui->actionGauss_filter,                 &QAction::triggered, this, &ImageWindow::imageModifierClicked);
     QObject::connect(ui->actionSobel,                        &QAction::triggered, this, &ImageWindow::imageModifierClicked);
+    QObject::connect(ui->actionZheng_Suen,                   &QAction::triggered, this, &ImageWindow::imageModifierClicked);
 
     QObject::connect(ui->actionGreyscale,                    &QAction::triggered, this, &ImageWindow::loadGreyscaleImage);
     QObject::connect(ui->actionColor,                        &QAction::triggered, this, &ImageWindow::loadColorImage);

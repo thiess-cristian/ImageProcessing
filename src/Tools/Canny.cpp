@@ -1,6 +1,7 @@
 #include "Canny.h"
 #include "GaussFilter.h"
 #include "Sobel.h"
+#include "ValueInputDialog.h"
 #include <qimage.h>
 
 
@@ -13,6 +14,12 @@ Canny::Canny()
 
 QImage * Canny::modify(QImage * image)
 {
+    ValueInputDialog dialog(2);
+
+    auto thresholds=dialog.show();
+    m_t1 = thresholds[0];
+    m_t2 = thresholds[1];
+
     GaussFilter gaussFilter;
     QImage* gaussImage = gaussFilter.modify(image);
 
@@ -32,7 +39,6 @@ QImage * Canny::modify(QImage * image)
             modifiedImage->setPixelColor(i, j, hysteresisThresholding(sobelImage, i, j, resultGrad));
         }
     }
-
     return modifiedImage;
 }
 
@@ -53,7 +59,7 @@ void Canny::nonMaxSuppression(QImage * image, size_t x, size_t y,const std::vect
             }
             break;
         }
-        case 45: {
+        case 135: {
             double northEastPixel = gradient[(x + 1)*image->height() + y - 1];
             double southWestPixel = gradient[(x - 1)*image->height() + y + 1];
 
@@ -76,7 +82,7 @@ void Canny::nonMaxSuppression(QImage * image, size_t x, size_t y,const std::vect
 
             break;
         }
-        case 135: {
+        case 45: {
             double northWestPixel = gradient[(x - 1)*image->height() + y - 1];
             double southEastPixel = gradient[(x + 1)*image->height() + y + 1];
 
@@ -92,7 +98,7 @@ void Canny::nonMaxSuppression(QImage * image, size_t x, size_t y,const std::vect
     }
 }
 
-QColor Canny::hysteresisThresholding(QImage * image, size_t x, size_t y,const std::vector<double>& gradient)
+QColor Canny::hysteresisThresholding(QImage * image, size_t x, size_t y, const std::vector<double>& gradient)
 {
     if (abs(gradient[x*image->height() + y]) <= m_t1) {
         return QColor(0, 0, 0);

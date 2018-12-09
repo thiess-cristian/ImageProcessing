@@ -130,6 +130,7 @@
     <addaction name="actionCanny"/>
     <addaction name="actionGauss_filter"/>
     <addaction name="actionSobel"/>
+    <addaction name="actionZheng_Suen"/>
    </widget>
    <widget class="QMenu" name="menuMouse_Tools">
     <property name="title">
@@ -234,6 +235,11 @@
   <action name="actionSobel">
    <property name="text">
     <string>Sobel</string>
+   </property>
+  </action>
+  <action name="actionZheng_Suen">
+   <property name="text">
+    <string>Zhang Suen</string>
    </property>
   </action>
  </widget>

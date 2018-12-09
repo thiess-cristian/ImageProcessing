@@ -13,4 +13,5 @@ namespace ImageModifierNames
     const std::string Canny = "Canny";
     const std::string GaussFilter = "Gauss filter";
     const std::string Sobel = "Sobel";
+    const std::string ZhangSuen = "Zhang Suen";
 }

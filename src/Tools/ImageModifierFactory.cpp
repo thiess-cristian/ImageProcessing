@@ -10,6 +10,7 @@
 #include "GaussFilter.h"
 #include "Canny.h"
 #include "Sobel.h"
+#include "ZhangSuen.h"
 
 
 ImageModifierFactory::ImageModifierFactory()
@@ -24,6 +25,7 @@ ImageModifierFactory::ImageModifierFactory()
     m_imageModifiers[ImageModifierNames::Canny] =                      []() {return new Canny(); };
     m_imageModifiers[ImageModifierNames::GaussFilter] =                []() {return new GaussFilter(); };
     m_imageModifiers[ImageModifierNames::Sobel] =                      []() {return new Sobel(); };
+    m_imageModifiers[ImageModifierNames::ZhangSuen] =                  []() {return new ZhangSuen(); };
 }
 
 ImageModifierFactory::~ImageModifierFactory()

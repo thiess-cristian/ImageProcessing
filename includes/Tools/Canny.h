@@ -14,7 +14,10 @@ public:
 
 
 private:
-    void nonMaxSuppression(QImage * image, size_t x, size_t y, const std::vector<double>& gradient, const std::vector<double>& edgeDir,std::vector<double>& resultGradient);
+    void nonMaxSuppression(QImage * image, size_t x, size_t y, 
+                           const std::vector<double>& gradient, 
+                           const std::vector<double>& edgeDir,
+                           std::vector<double>& resultGradient);
     QColor hysteresisThresholding(QImage * image, size_t x, size_t y, const std::vector<double>& gradient);
 
     size_t m_t1;

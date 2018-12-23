@@ -51,6 +51,8 @@ ImageWindow::ImageWindow(QWidget *parent) :
     QObject::connect(ui->actionGauss_filter,                 &QAction::triggered, this, &ImageWindow::imageModifierClicked);
     QObject::connect(ui->actionSobel,                        &QAction::triggered, this, &ImageWindow::imageModifierClicked);
     QObject::connect(ui->actionZheng_Suen,                   &QAction::triggered, this, &ImageWindow::imageModifierClicked);
+    QObject::connect(ui->actionBicubic,                      &QAction::triggered, this, &ImageWindow::imageModifierClicked);
+    QObject::connect(ui->actionHough,                        &QAction::triggered, this, &ImageWindow::imageModifierClicked);
 
     QObject::connect(ui->actionGreyscale,                    &QAction::triggered, this, &ImageWindow::loadGreyscaleImage);
     QObject::connect(ui->actionColor,                        &QAction::triggered, this, &ImageWindow::loadColorImage);
@@ -146,6 +148,7 @@ void ImageWindow::imageModifierClicked()
         QImage* image = modifier->modify(m_initialImage->getImage());
         delete modifier;
         setModifiedImage(image);
+        m_initialImage->setSelectedImage(m_initialImage->getImage());
    // };
    // QtConcurrent::run(f);
 }

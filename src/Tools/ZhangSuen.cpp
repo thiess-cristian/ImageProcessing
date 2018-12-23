@@ -25,10 +25,10 @@ QImage * ZhangSuen::modify(QImage * image)
         QColor p6 = m_neighbors[4];
         QColor p8 = m_neighbors[6];
 
-        QColor white(255, 255, 255);
+        QColor black(0, 0, 0);
 
-        bool ok1 = p2 == white || p4 == white || p6 == white;
-        bool ok2 = p4 == white || p6 == white || p8 == white;
+        bool ok1 = p2 == black || p4 == black || p6 == black;
+        bool ok2 = p4 == black || p6 == black || p8 == black;
 
         return ok1 &&ok2;
     };
@@ -39,12 +39,12 @@ QImage * ZhangSuen::modify(QImage * image)
         QColor p6 = m_neighbors[4];
         QColor p8 = m_neighbors[6];
 
-        QColor white(255, 255, 255);
+        QColor black(0, 0, 0);
 
-        bool ok1 = p2 == white || p4 == white || p8 == white;
-        bool ok2 = p2 == white || p6 == white || p8 == white;
+        bool ok1 = p2 == black && p4 == black && p8 == black;
+        bool ok2 = p2 == black && p6 == black && p8 == black;
 
-        return ok1 &&ok2;
+        return ok1 && ok2;
     };
     int x = 0;
     bool imageWasModified;
@@ -52,10 +52,10 @@ QImage * ZhangSuen::modify(QImage * image)
         imageWasModified = false;
 
         tempImage1.reset(new QImage(m_endImage->copy(QRect(0, 0, m_endImage->width(), m_endImage->height()))));
-        bool step1Result = step(tempImage1.get(), step1Check);
+        bool step1Result = changeImage(tempImage1.get(), step1Check);
 
         tempImage2.reset(new QImage(m_endImage->copy(QRect(0, 0, m_endImage->width(), m_endImage->height()))));
-        bool step2Result = step(tempImage2.get(), step2Check);
+        bool step2Result = changeImage(tempImage2.get(), step2Check);
 
         if (step1Result || step2Result) {
             imageWasModified = true;
@@ -64,17 +64,18 @@ QImage * ZhangSuen::modify(QImage * image)
         std::cout << x++ << std::endl;
    
    } while (imageWasModified);
+
     return m_endImage;
 }
 
-bool ZhangSuen::step(QImage * modifiedImage, std::function< bool()> neighborCheck)
+bool ZhangSuen::changeImage(QImage * modifiedImage, std::function< bool()> neighborCheck)
 {
    
     size_t border = 1;
 
     for (size_t i = border; i < modifiedImage->width() - border; i++) {
         for (size_t j = border; j < modifiedImage->height() - border; j++) {
-            if (modifiedImage->pixelColor(i, j) != QColor(255,255,255)) {
+            if (modifiedImage->pixelColor(i, j) == QColor(0,0,0)) {
                 continue;
             }
 
@@ -116,24 +117,24 @@ size_t ZhangSuen::nrOfTransitions()
     QColor white(255, 255, 255);
     QColor black(0, 0, 0);
     for (size_t i = 0; i < m_neighbors.size()-1; i++) {
-        if (m_neighbors[i] == white && m_neighbors[i + 1] == black) {
+        if (m_neighbors[i] == black && m_neighbors[i + 1] == white) {
             transitions++;
         }
     }
 
-    if (m_neighbors[m_neighbors.size() - 1] == white && m_neighbors[0] == black) {
+    if (m_neighbors[m_neighbors.size() - 1] == black && m_neighbors[0] == white) {
         transitions++;
     }
     return transitions;
 }
 
-size_t ZhangSuen::nrOfBlackNeighbors()
+size_t ZhangSuen::nrOfWhiteNeighbors()
 {
     size_t nr = 0;
-    QColor black(0, 0, 0);
+    QColor white(255, 255, 255);
 
     for (const auto& neighbor : m_neighbors) {
-        if (neighbor == black) {
+        if (neighbor == white) {
             nr++;
         }
     }
@@ -144,8 +145,8 @@ bool ZhangSuen::checkPixel(std::function< bool()> neighborCheck)
 {
     bool transitions = nrOfTransitions() == 1;
 
-    size_t nrOfNeighbors = nrOfBlackNeighbors();
-    bool neighbors = 3 <= nrOfNeighbors && nrOfNeighbors <= 6;
+    size_t nrOfNeighbors = nrOfWhiteNeighbors();
+    bool neighbors = 2 <= nrOfNeighbors && nrOfNeighbors <= 6;
 
     bool check = neighborCheck();
 

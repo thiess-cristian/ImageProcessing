@@ -12,6 +12,7 @@ public:
 
     std::vector<double> getGradient() const;
     std::vector<double> getEdgeDirection() const;
+    std::vector<double> getAngles()const;
 
 private:
 
@@ -28,4 +29,5 @@ private:
 
     std::vector<double> m_grad;
     std::vector<double> m_edgeDir;
+    std::vector<double> m_angles;
 };

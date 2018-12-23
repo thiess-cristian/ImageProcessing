@@ -11,6 +11,8 @@
 #include "Canny.h"
 #include "Sobel.h"
 #include "ZhangSuen.h"
+#include "Bicubic.h"
+#include "Hough.h"
 
 
 ImageModifierFactory::ImageModifierFactory()
@@ -26,6 +28,8 @@ ImageModifierFactory::ImageModifierFactory()
     m_imageModifiers[ImageModifierNames::GaussFilter] =                []() {return new GaussFilter(); };
     m_imageModifiers[ImageModifierNames::Sobel] =                      []() {return new Sobel(); };
     m_imageModifiers[ImageModifierNames::ZhangSuen] =                  []() {return new ZhangSuen(); };
+    m_imageModifiers[ImageModifierNames::Bicubic] =                    []() {return new Bicubic(); };
+    m_imageModifiers[ImageModifierNames::Hough] =                      [](){return new Hough(); };
 }
 
 ImageModifierFactory::~ImageModifierFactory()

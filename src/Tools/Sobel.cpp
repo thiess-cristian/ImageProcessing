@@ -27,6 +27,7 @@ QImage * Sobel::modify(QImage * image)
 
     m_grad.resize(image->width()*image->height());
     m_edgeDir.resize(image->width()*image->height());
+    m_angles.resize(image->width()*image->height());
 
     for (size_t i = border; i < image->width() - border; i++) {
         for (size_t j = border; j < image->height() - border; j++) {
@@ -44,6 +45,11 @@ std::vector<double> Sobel::getGradient() const
 std::vector<double> Sobel::getEdgeDirection() const
 {
     return m_edgeDir;
+}
+
+std::vector<double> Sobel::getAngles() const
+{
+    return m_angles;
 }
 
 QColor Sobel::getSobelColor(QImage * image, int x, int y)
@@ -69,6 +75,8 @@ QColor Sobel::getSobelColor(QImage * image, int x, int y)
 
     m_edgeDir[x*image->height() + y]=angle(sumX, sumY);
 
+    m_angles[x*image->height()+y]= (atan2(sumX, sumY) / 3.14159) * 180.0;
+
     if (value > m_t2) {
         value = 0;
     }
@@ -82,6 +90,7 @@ QColor Sobel::getSobelColor(QImage * image, int x, int y)
 double Sobel::angle(double sumX, double sumY)
 {
     auto thisAngle = (atan2(sumX, sumY) / 3.14159) * 180.0;
+
     auto returnedAngle = 0.0;
 
     if (((thisAngle < 22.5) && (thisAngle > -22.5)) || (thisAngle > 157.5) || (thisAngle < -157.5)) {

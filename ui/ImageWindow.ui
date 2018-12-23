@@ -131,6 +131,8 @@
     <addaction name="actionGauss_filter"/>
     <addaction name="actionSobel"/>
     <addaction name="actionZheng_Suen"/>
+    <addaction name="actionBicubic"/>
+    <addaction name="actionHough"/>
    </widget>
    <widget class="QMenu" name="menuMouse_Tools">
     <property name="title">
@@ -240,6 +242,16 @@
   <action name="actionZheng_Suen">
    <property name="text">
     <string>Zhang Suen</string>
+   </property>
+  </action>
+  <action name="actionBicubic">
+   <property name="text">
+    <string>Bicubic</string>
+   </property>
+  </action>
+  <action name="actionHough">
+   <property name="text">
+    <string>Hough</string>
    </property>
   </action>
  </widget>

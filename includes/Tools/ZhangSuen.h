@@ -14,10 +14,10 @@ public:
     virtual QImage * modify(QImage * image) override;
 
 private:
-    bool step(QImage* image, std::function< bool()> neighborCheck);
+    bool changeImage(QImage* image, std::function< bool()> neighborCheck);
     void setNeighbors(QImage* image, size_t x, size_t y);
     size_t nrOfTransitions();
-    size_t nrOfBlackNeighbors();
+    size_t nrOfWhiteNeighbors();
     bool checkPixel( std::function< bool()> neighborCheck);
     size_t m_gridSize=3;
 

@@ -70,6 +70,6 @@ QColor GaussFilter::getFilteredColor(QImage * image, size_t x, size_t y)
             sum += value*m_mask[k++];
         }
     }
-    sum /= m_c;
+    //sum /= m_c;
     return QColor(sum,sum,sum);
 }

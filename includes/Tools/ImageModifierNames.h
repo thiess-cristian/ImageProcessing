@@ -16,4 +16,5 @@ namespace ImageModifierNames
     const std::string ZhangSuen = "Zhang Suen";
     const std::string Bicubic = "Bicubic";
     const std::string Hough = "Hough";
+    const std::string Intermeans = "Intermeans";
 }

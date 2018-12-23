@@ -9,6 +9,14 @@ enum class Display
     Matrix
 };
 
+struct Peak
+{
+    Peak(double r, double theta, double val);
+    double m_r;
+    double m_theta;
+    double m_val;
+
+};
 
 class Hough :public IImageModifier
 {
@@ -24,8 +32,7 @@ private:
     size_t m_matrixWidth;
     size_t m_matrixHeight;
 
-    QImage* displayEdges(QImage* image);
-    QImage* displayMatrix(QImage* image);
+    std::vector<Peak> findPeaks(const std::vector<int>& values);
 
     Display m_display;
 };

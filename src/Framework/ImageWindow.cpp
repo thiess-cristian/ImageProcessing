@@ -53,6 +53,7 @@ ImageWindow::ImageWindow(QWidget *parent) :
     QObject::connect(ui->actionZheng_Suen,                   &QAction::triggered, this, &ImageWindow::imageModifierClicked);
     QObject::connect(ui->actionBicubic,                      &QAction::triggered, this, &ImageWindow::imageModifierClicked);
     QObject::connect(ui->actionHough,                        &QAction::triggered, this, &ImageWindow::imageModifierClicked);
+    QObject::connect(ui->actionIntermeans,                   &QAction::triggered, this, &ImageWindow::imageModifierClicked);
 
     QObject::connect(ui->actionGreyscale,                    &QAction::triggered, this, &ImageWindow::loadGreyscaleImage);
     QObject::connect(ui->actionColor,                        &QAction::triggered, this, &ImageWindow::loadColorImage);
@@ -135,6 +136,7 @@ void ImageWindow::magnifyImage()
 void ImageWindow::meanColors()
 {
     m_modifiedImage->toggleMean();
+    m_initialImage->toggleMean();
 }
 
 void ImageWindow::imageModifierClicked()

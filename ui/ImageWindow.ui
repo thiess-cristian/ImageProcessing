@@ -133,6 +133,7 @@
     <addaction name="actionZheng_Suen"/>
     <addaction name="actionBicubic"/>
     <addaction name="actionHough"/>
+    <addaction name="actionIntermeans"/>
    </widget>
    <widget class="QMenu" name="menuMouse_Tools">
     <property name="title">
@@ -252,6 +253,11 @@
   <action name="actionHough">
    <property name="text">
     <string>Hough</string>
+   </property>
+  </action>
+  <action name="actionIntermeans">
+   <property name="text">
+    <string>Intermeans</string>
    </property>
   </action>
  </widget>

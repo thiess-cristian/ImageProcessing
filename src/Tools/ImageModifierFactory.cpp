@@ -13,6 +13,7 @@
 #include "ZhangSuen.h"
 #include "Bicubic.h"
 #include "Hough.h"
+#include "Intermeans.h"
 
 
 ImageModifierFactory::ImageModifierFactory()
@@ -30,6 +31,7 @@ ImageModifierFactory::ImageModifierFactory()
     m_imageModifiers[ImageModifierNames::ZhangSuen] =                  []() {return new ZhangSuen(); };
     m_imageModifiers[ImageModifierNames::Bicubic] =                    []() {return new Bicubic(); };
     m_imageModifiers[ImageModifierNames::Hough] =                      [](){return new Hough(); };
+    m_imageModifiers[ImageModifierNames::Intermeans] =                 []() {return new Intermeans(); };
 }
 
 ImageModifierFactory::~ImageModifierFactory()

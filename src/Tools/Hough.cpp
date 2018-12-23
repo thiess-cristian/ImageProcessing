@@ -5,6 +5,7 @@
 #include <math.h>
 #include <qpixmap.h>
 #include <qpainter.h>
+#include <iostream>
 
 Hough::Hough(Display display):m_display(display)
 {}
@@ -21,9 +22,7 @@ QImage * Hough::modify(QImage * image)
 
     m_matrix.resize(m_matrixWidth * m_matrixHeight);
 
-    std::vector<double> edgeDir = canny.getEdgeDir();
-    std::vector<double> angles = canny.getAngles();
-    
+
     QColor white(255, 255, 255);
 
     for (int x = 0; x < image->width(); x++) {
@@ -67,27 +66,63 @@ QImage * Hough::modify(QImage * image)
         }
     }
 
-    auto d = [maxR,maxTheta,this](auto x) {
+    auto d = [this](auto x,auto maxR,auto maxTheta) {
         double thetaRadians = maxTheta * M_PI / m_matrixHeight;
         double scalledR = (maxR - m_matrixWidth / 2) / (m_matrixWidth / 2)*m_matrixWidth;
-        return (scalledR - x*cos(thetaRadians))*sin(thetaRadians);
+        return (scalledR - x*cos(thetaRadians))/sin(thetaRadians);
     };
+    auto peaks=findPeaks(m_matrix);
 
-    for (int x = 0; x < 1000; x++) {
-        int y = d(x);
-        image->setPixelColor(x, y, QColor(255, 0, 0));
+    for (const auto& peak : peaks) {       
+        for (double x = 0; x < 1000; x++) {
+            double y = d(x,peak.m_r,peak.m_theta);
+            if (y >= 0 && y < image->height() && x>=0 && x<image->width()) {
+            image->setPixelColor(x, y, QColor(255, 0, 0));
+            }
+        }
     }
-
-
     return resultImage;
 }
 
-QImage * Hough::displayEdges(QImage * image)
+std::vector<Peak> Hough::findPeaks(const std::vector<int>& amp)
 {
-    return nullptr;
+    const int NOISE = 200;              
+    int wideStart = -1;                 
+    int grad = -1;                     
+                                                                      
+    std::vector<Peak>peaks;
+
+    for (int x = 0; x < m_matrixWidth - 1; x++) {
+        for (int y = 0; y < m_matrixHeight - 1; y++) {
+
+            double currentValue = m_matrix[x*m_matrixHeight + y];
+            double nextValue = m_matrix[x*m_matrixHeight + y +1];
+
+            if (nextValue < currentValue)         // Only possibility of a peak
+            {
+                if (grad == 1 && currentValue > NOISE) {
+
+                    Peak peak(x,y,currentValue);
+                    peaks.push_back(peak);
+
+                    std::cout << "Sharp peak of " << currentValue << " at i = "<< x*m_matrixHeight + y << '\n';
+                } else if (grad == 0 && currentValue > NOISE) {
+                   // std::cout << "Wide peak of " << currentValue << " from i = " << wideStart << " to "  << '\n';
+                }
+                grad = -1;
+            } else if (nextValue == currentValue)   // Check for start of a wide peak
+            {
+                if (grad == 1) {
+                    wideStart = x*m_matrixHeight + y;
+                    grad = 0;
+                }
+            } else {
+                grad = 1;
+            }
+        }
+    }
+    return peaks;
 }
 
-QImage * Hough::displayMatrix(QImage * image)
-{
-    return nullptr;
-}
+Peak::Peak(double r, double theta, double val):m_r(r),m_theta(theta),m_val(val)
+{}

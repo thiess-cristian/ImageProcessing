@@ -6,22 +6,35 @@
 #include <qpixmap.h>
 #include <qpainter.h>
 #include <iostream>
+#include "ValueInputDialog.h"
+
+#define DEG2RAD 0.017453293f
 
 Hough::Hough(Display display):m_display(display)
 {}
 
 QImage * Hough::modify(QImage * image)
 {
-    
+   // ValueInputDialog dialog(1);
+
+  //  auto thresholds = dialog.show();
+   // m_threshold = thresholds[0];
+
+    m_threshold = 200;
     Canny canny(false);
 
     QImage* thresholdImage = canny.modify(image);
+
+    m_imgHeight = thresholdImage->height();
+    m_imgWidth = thresholdImage->width();
+
 
     m_matrixWidth = sqrt(pow(image->width(), 2) + pow(image->height(), 2));
     m_matrixHeight = 270;
 
     m_matrix.resize(m_matrixWidth * m_matrixHeight);
 
+   
 
     QColor white(255, 255, 255);
 
@@ -52,29 +65,16 @@ QImage * Hough::modify(QImage * image)
         }
     }
 
-
-    double maxR = 0;
-    double maxTheta = 0;
-    double maxVal = 0;
-    for (int x = 0; x < resultImage->width(); x++) {
-        for (int y = 0; y < resultImage->height(); y++) {
-            if (m_matrix[x*resultImage->height() + y] > maxVal) {
-                maxVal = m_matrix[x*resultImage->height() + y];
-                maxR = x;
-                maxTheta = y;
-            }
-        }
-    }
-
     auto d = [this](auto x,auto maxR,auto maxTheta) {
         double thetaRadians = maxTheta * M_PI / m_matrixHeight;
         double scalledR = (maxR - m_matrixWidth / 2) / (m_matrixWidth / 2)*m_matrixWidth;
         return (scalledR - x*cos(thetaRadians))/sin(thetaRadians);
     };
-    auto peaks=findPeaks(m_matrix);
+
+    auto peaks=findPeaks2(m_matrix);
 
     for (const auto& peak : peaks) {       
-        for (double x = 0; x < 1000; x++) {
+        for (double x = 0; x < 1000; x+=0.01) {
             double y = d(x,peak.m_r,peak.m_theta);
             if (y >= 0 && y < image->height() && x>=0 && x<image->width()) {
             image->setPixelColor(x, y, QColor(255, 0, 0));
@@ -84,40 +84,33 @@ QImage * Hough::modify(QImage * image)
     return resultImage;
 }
 
-std::vector<Peak> Hough::findPeaks(const std::vector<int>& amp)
+std::vector<Peak> Hough::findPeaks2(const std::vector<int>& values)
 {
-    const int NOISE = 200;              
-    int wideStart = -1;                 
-    int grad = -1;                     
-                                                                      
-    std::vector<Peak>peaks;
+    std::vector<Peak> peaks;
 
-    for (int x = 0; x < m_matrixWidth - 1; x++) {
-        for (int y = 0; y < m_matrixHeight - 1; y++) {
+   for (int r = 0; r < m_matrixWidth; r++) {
+      for (int t = 0; t < m_matrixHeight; t++) {
+            if (m_matrix[r*m_matrixHeight + t] > m_threshold) {
+                int max = m_matrix[r*m_matrixHeight + t];
 
-            double currentValue = m_matrix[x*m_matrixHeight + y];
-            double nextValue = m_matrix[x*m_matrixHeight + y +1];
-
-            if (nextValue < currentValue)         // Only possibility of a peak
-            {
-                if (grad == 1 && currentValue > NOISE) {
-
-                    Peak peak(x,y,currentValue);
-                    peaks.push_back(peak);
-
-                    std::cout << "Sharp peak of " << currentValue << " at i = "<< x*m_matrixHeight + y << '\n';
-                } else if (grad == 0 && currentValue > NOISE) {
-                   // std::cout << "Wide peak of " << currentValue << " from i = " << wideStart << " to "  << '\n';
+                for (int ly = -4; ly <= 4; ly++) {
+                    for (int lx = -4; lx <= 4; lx++) {
+                        if ((ly + r >= 0 && ly + r < m_matrixWidth) && (lx + t >= 0 && lx + t < m_matrixHeight)) {
+                            if (m_matrix[(ly + r) *m_matrixHeight + (lx + t)] > max) {
+                                max = m_matrix[(ly + r)*m_matrixHeight + (lx + t)];
+                                ly = 5;
+                                lx = 5;
+                            }
+                        }
+                    }
                 }
-                grad = -1;
-            } else if (nextValue == currentValue)   // Check for start of a wide peak
-            {
-                if (grad == 1) {
-                    wideStart = x*m_matrixHeight + y;
-                    grad = 0;
+
+                if (max >(int)m_matrix[r*m_matrixHeight + t]) {
+                    continue;
                 }
-            } else {
-                grad = 1;
+
+                Peak peak(r,t, max);
+                peaks.push_back(peak);
             }
         }
     }
@@ -126,3 +119,13 @@ std::vector<Peak> Hough::findPeaks(const std::vector<int>& amp)
 
 Peak::Peak(double r, double theta, double val):m_r(r),m_theta(theta),m_val(val)
 {}
+
+bool Peak::operator>(const Peak & peak)
+{
+    return this->m_val > peak.m_val;
+}
+
+bool Peak::operator>(double values)
+{
+    return this->m_val > values;
+}

@@ -16,6 +16,9 @@ struct Peak
     double m_theta;
     double m_val;
 
+    bool operator>(const Peak& peak);
+    bool operator>(double values);
+
 };
 
 class Hough :public IImageModifier
@@ -29,10 +32,14 @@ public:
 
 private:
     std::vector<int> m_matrix;
-    size_t m_matrixWidth;
-    size_t m_matrixHeight;
+    int m_matrixWidth;
+    int m_matrixHeight;
+    int m_imgWidth;
+    int m_imgHeight;
 
-    std::vector<Peak> findPeaks(const std::vector<int>& values);
+    int m_threshold;
+
+    std::vector<Peak> findPeaks2(const std::vector<int>& values);
 
     Display m_display;
 };
